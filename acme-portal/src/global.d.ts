@@ -1,4 +1,7 @@
 declare global {
   function importShim(moduleId: string): Promise<any>;
 }
-export {};
+
+export interface Configuration {
+  ufronts: Record<string, string>;
+}

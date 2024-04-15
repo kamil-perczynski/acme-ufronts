@@ -9,8 +9,8 @@ export default async function ProductCatalogPage() {
   return (
     <main className="w-full lg:min-h-[600px] xl:min-h-[800px]">
       <Dashboard loggedUser={loggedUser}>
-        <div id="@re/product-catalog" className="container mx-auto p-4">
-          <Microfront microfrontId="@re/product-catalog" />
+        <div id="@acme/acme-product-catalog" className="container mx-auto p-4">
+          <Microfront microfrontId="@acme/acme-product-catalog" />
         </div>
       </Dashboard>
     </main>

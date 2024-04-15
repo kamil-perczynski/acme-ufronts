@@ -1,8 +1,7 @@
-.invoices td,
-.invoices th {
-  padding: 0.875rem;
+.invoices {
+  @apply pc-w-full pc-caption-bottom pc-text-sm;
 }
 
 .invoices caption {
-  padding-bottom: 0.875rem;
+  @apply pc-pb-2
 }

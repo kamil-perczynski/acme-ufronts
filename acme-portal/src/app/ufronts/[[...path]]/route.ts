@@ -1,24 +1,24 @@
 import { notFound } from "next/navigation";
 import { NextRequest } from "next/server";
-
-const ufronts: Record<string, string> = {
-  "acme-product-catalog": "http://localhost:4101",
-  "acme-clients": "http://localhost:4201",
-};
+import { AppConfig } from "../../../features/AppConfig";
+import { Configuration } from "~/global";
 
 export const dynamic = "force-dynamic";
+
+const appConfig = AppConfig.load<Configuration>();
 
 export async function GET(
   request: NextRequest,
   { params }: { params: { path: string[] } }
 ) {
+  const { ufronts } = await appConfig.get();
   const ufrontBaseUrl = ufronts[params.path[0]];
   if (!ufrontBaseUrl) {
     return notFound();
   }
 
   const { pathname, search } = new URL(request.url);
-  
+
   console.log("(${}) Proxying to: " + ufrontBaseUrl, pathname, search);
   const proxiedUrl = new URL(pathname + search, ufrontBaseUrl);
 
