@@ -29,7 +29,6 @@ export async function GET(
   const response = await fetch(proxiedUrl, { cache: "no-cache" });
 
   const headers = toResponseHeaders(response);
-
   const responseBody = await response.blob();
 
   return new Response(responseBody, {
