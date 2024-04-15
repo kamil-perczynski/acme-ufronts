@@ -14,6 +14,6 @@ export function someLoggedUser(): LoggedUser {
 
 export async function fetchLoggedUser(): Promise<LoggedUser> {
   return fetch("https://jsonplaceholder.typicode.com/users/2").then((res) =>
-    res.json()
+    res.json(),
   );
 }

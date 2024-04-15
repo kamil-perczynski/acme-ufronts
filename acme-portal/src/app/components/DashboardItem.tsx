@@ -21,7 +21,7 @@ export const DashboardItem: React.FC<Props> = (props) => {
 
   const classes = cn(
     isCurrentRoute && "bg-muted text-black",
-    !isCurrentRoute && "text-muted-foreground"
+    !isCurrentRoute && "text-muted-foreground",
   );
 
   return (
@@ -29,7 +29,7 @@ export const DashboardItem: React.FC<Props> = (props) => {
       href={href}
       className={cn(
         "flex items-center gap-3 rounded-lg px-3 py-2 transition-all hover:text-black",
-        classes
+        classes,
       )}
       {...rest}
     >

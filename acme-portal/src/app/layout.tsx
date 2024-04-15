@@ -28,12 +28,14 @@ export default function RootLayout(props: Props) {
             __html: JSON.stringify(
               {
                 imports: {
-                  "@acme/acme-product-catalog": toSpaUrl("acme-product-catalog"),
+                  "@acme/acme-product-catalog": toSpaUrl(
+                    "acme-product-catalog",
+                  ),
                   "@acme/acme-clients": toSpaUrl("acme-clients"),
                 },
               },
               undefined,
-              2
+              2,
             ),
           }}
         ></script>

@@ -61,7 +61,7 @@ export default function SignInPage() {
       <div
         className={cn(
           "inset-0 bg-zinc-900 col-span-7 overflow-hidden",
-          styles.bg
+          styles.bg,
         )}
       ></div>
     </main>

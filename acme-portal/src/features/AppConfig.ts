@@ -24,7 +24,7 @@ export class AppConfig<T extends object> {
     console.debug("Reading config from: ", configPath);
 
     return new AppConfig(
-      fs.promises.readFile(configPath).then((bytes) => bytes.toString("utf-8"))
+      fs.promises.readFile(configPath).then((bytes) => bytes.toString("utf-8")),
     );
   }
 }

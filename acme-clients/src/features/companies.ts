@@ -10,6 +10,6 @@ export interface BankListItem {
 
 export async function fetchBanks() {
   return fetch("https://random-data-api.com/api/v2/banks?size=60").then((res) =>
-    res.json()
+    res.json(),
   );
 }

@@ -14,13 +14,13 @@ export const Footer: React.FC<Props> = (props) => {
       <div
         className={cn(
           styles.footer,
-          "w-full bg-black lg:h-[400px] text-secondary fixed"
+          "w-full bg-black lg:h-[400px] text-secondary fixed",
         )}
       >
         <div
           className={cn(
             styles.footer,
-            "w-full border-t-[1px] border-zinc-800 p-10 lg:p-24 bg-black bottom-[0] flex flex-col lg:flex-row lg:gap-x-10 gap-y-10"
+            "w-full border-t-[1px] border-zinc-800 p-10 lg:p-24 bg-black bottom-[0] flex flex-col lg:flex-row lg:gap-x-10 gap-y-10",
           )}
         >
           <div className="lg:w-[15%]">

@@ -25,7 +25,7 @@ export const Microfront: React.FC<Props> = (props) => {
         subscription.current = null;
       };
     },
-    []
+    [],
   );
 
   useEffect(() => {

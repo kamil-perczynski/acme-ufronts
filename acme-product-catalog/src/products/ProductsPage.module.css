@@ -3,5 +3,5 @@
 }
 
 .invoices caption {
-  @apply pc-pb-2
+  @apply pc-pb-2;
 }

@@ -9,7 +9,7 @@ const appConfig = AppConfig.load<Configuration>();
 
 export async function GET(
   request: NextRequest,
-  { params }: { params: { path: string[] } }
+  { params }: { params: { path: string[] } },
 ) {
   const { ufronts } = await appConfig.get();
   const ufrontBaseUrl = ufronts[params.path[0]];
