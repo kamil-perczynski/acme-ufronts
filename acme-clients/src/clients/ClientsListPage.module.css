@@ -1,0 +1,8 @@
+.invoices td,
+.invoices th {
+  padding: 0.875rem;
+}
+
+.invoices caption {
+  padding-bottom: 0.875rem;
+}

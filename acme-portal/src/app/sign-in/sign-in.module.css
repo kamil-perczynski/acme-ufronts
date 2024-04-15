@@ -1,0 +1,9 @@
+.bg {
+  background-image: url(/login-bg.webp);
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: 50% 50%;
+  background-blend-mode: hard-light;
+  position: relative;
+  filter: grayscale(.85);
+}
