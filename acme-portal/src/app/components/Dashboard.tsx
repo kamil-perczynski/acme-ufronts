@@ -1,6 +1,7 @@
 import type { ReactNode } from "react";
 import Link from "next/link";
 import {
+  BarChart3,
   Home,
   LineChart,
   Menu,
@@ -113,7 +114,7 @@ export const Dashboard: React.FC<DashboardProps> = (props) => {
                 text="Clients"
               />
               <DashboardItem
-                icon={<Users className="h-4 w-4" />}
+                icon={<BarChart3 className="h-4 w-4" />}
                 href="/product-catalog/analytics"
                 text="Analytics"
               />
