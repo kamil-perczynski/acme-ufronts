@@ -75,9 +75,9 @@ export const Dashboard: React.FC<DashboardProps> = (props) => {
           <div className="flex flex-col gap-8">
             <div className="p-4 flex flex-row items-center">
               <Avatar className="bg-emerald-200 h-12 w-12">
-                <AvatarImage src="https://api.dicebear.com/8.x/lorelei/svg?seed=kamil.perczynski" />
+                <AvatarImage src={loggedUser.avatar} />
                 <AvatarFallback>
-                  {loggedUser.username.substring(0, 2).toLocaleUpperCase()}
+                  {loggedUser.displayName.substring(0, 2).toLocaleUpperCase()}
                 </AvatarFallback>
               </Avatar>
 
@@ -86,7 +86,7 @@ export const Dashboard: React.FC<DashboardProps> = (props) => {
                   Welcome
                 </span>
                 <span className="block px-3 font-semibold text-large">
-                  {loggedUser.name}
+                  {loggedUser.displayName}
                 </span>
               </div>
             </div>
@@ -111,6 +111,7 @@ export const Dashboard: React.FC<DashboardProps> = (props) => {
               <DashboardItem
                 icon={<Users className="h-4 w-4" />}
                 href="/clients"
+                activeAt="/clients"
                 text="Clients"
               />
               <DashboardItem
@@ -150,7 +151,9 @@ export const Dashboard: React.FC<DashboardProps> = (props) => {
                   <Avatar className="bg-emerald-200 h-12 w-12">
                     <AvatarImage src="https://api.dicebear.com/8.x/lorelei/svg?seed=kamil.perczynski" />
                     <AvatarFallback>
-                      {loggedUser.username.substring(0, 2).toLocaleUpperCase()}
+                      {loggedUser.displayName
+                        .substring(0, 2)
+                        .toLocaleUpperCase()}
                     </AvatarFallback>
                   </Avatar>
 

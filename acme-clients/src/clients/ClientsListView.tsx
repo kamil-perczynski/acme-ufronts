@@ -39,13 +39,15 @@ import {
   Badge,
 } from "@acme/acme-ds";
 import { BankListItem } from "../features/companies";
+import { Link } from "react-router-dom";
 
 const columnNames: Record<string, string> = {
   status: "Status",
-  bank_name: "Bank name",
-  swift_bic: "SWIFT",
-  routing_number: "Routing No",
-  account_number: "Account No",
+  name: "Company name",
+  country: "Country",
+  email: "E-mail",
+  phone: "Phone",
+  vat: "VAT",
 };
 
 export const columns: ColumnDef<BankListItem>[] = [
@@ -74,38 +76,49 @@ export const columns: ColumnDef<BankListItem>[] = [
   {
     accessorKey: "status",
     header: "Status",
-    cell: () => <Badge>Active</Badge>,
+    cell: () => (
+      <div className="c-w-[50px]">
+        <Badge>Active</Badge>
+      </div>
+    ),
   },
   {
-    accessorKey: "bank_name",
+    accessorKey: "name",
     header: ({ column }) => {
       return (
         <Button
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
-          Bank Name
+          Company Name
           <CaretSortIcon className="c-ml-2 c-h-4 c-w-4" />
         </Button>
       );
     },
     cell: ({ row }) => (
-      <div className="lowercase">{row.getValue("bank_name")}</div>
+      <div className="lowercase">
+        <Link className="hover:c-underline" to={`/clients/${row.original.id}`}>
+          {row.getValue("name")}
+        </Link>
+      </div>
     ),
   },
   {
-    accessorKey: "swift_bic",
-    header: () => <div className="c-text-right">Swift</div>,
+    accessorKey: "country",
+    header: () => <div>Country</div>,
     cell: ({ row }) => {
-      return (
-        <div className="c-text-right c-font-medium">
-          {row.getValue("swift_bic")}
-        </div>
-      );
+      return <div className="c-font-medium">{row.getValue("country")}</div>;
     },
   },
   {
-    accessorKey: "routing_number",
+    accessorKey: "email",
+    header: () => <div>E-mail</div>,
+    cell: ({ row }) => {
+      return <div className="c-font-medium">{row.getValue("email")}</div>;
+    },
+  },
+  {
+    accessorKey: "phone",
     header: ({ column }) => {
       return (
         <div className="c-flex c-justify-end">
@@ -113,7 +126,7 @@ export const columns: ColumnDef<BankListItem>[] = [
             variant="ghost"
             onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
           >
-            Routing No
+            Phone
             <CaretSortIcon className="c-ml-2 c-h-4 c-w-4" />
           </Button>
         </div>
@@ -122,19 +135,17 @@ export const columns: ColumnDef<BankListItem>[] = [
     cell: ({ row }) => {
       return (
         <div className="c-text-right c-font-medium">
-          {row.getValue("routing_number")}
+          {row.getValue("phone")}
         </div>
       );
     },
   },
   {
-    accessorKey: "account_number",
-    header: () => <div className="c-text-right">Account No</div>,
+    accessorKey: "vat",
+    header: () => <div className="c-text-right">VAT</div>,
     cell: ({ row }) => {
       return (
-        <div className="c-text-right c-font-medium">
-          {row.getValue("account_number")}
-        </div>
+        <div className="c-text-right c-font-medium">{row.getValue("vat")}</div>
       );
     },
   },
@@ -153,9 +164,9 @@ export const columns: ColumnDef<BankListItem>[] = [
           <DropdownMenuContent align="end">
             <DropdownMenuLabel>Actions</DropdownMenuLabel>
             <DropdownMenuItem
-              onClick={() => navigator.clipboard.writeText(bank.swift_bic)}
+              onClick={() => navigator.clipboard.writeText(bank.vat)}
             >
-              Copy SWIFT
+              Copy VAT
             </DropdownMenuItem>
             <DropdownMenuSeparator />
             <DropdownMenuItem>View customer</DropdownMenuItem>
@@ -251,7 +262,7 @@ export const ClientsListView: React.FC<{ banks: BankListItem[] }> = (props) => {
                         ? null
                         : flexRender(
                             header.column.columnDef.header,
-                            header.getContext(),
+                            header.getContext()
                           )}
                     </TableHead>
                   );
@@ -270,7 +281,7 @@ export const ClientsListView: React.FC<{ banks: BankListItem[] }> = (props) => {
                     <TableCell key={cell.id}>
                       {flexRender(
                         cell.column.columnDef.cell,
-                        cell.getContext(),
+                        cell.getContext()
                       )}
                     </TableCell>
                   ))}

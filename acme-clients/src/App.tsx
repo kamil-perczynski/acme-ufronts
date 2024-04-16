@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { Route, Routes, useNavigate } from "react-router-dom";
 import { ClientsListPage as ClientsListPage } from "./clients/ClientsListPage";
 import { NotFoundPage } from "./NotFoundPage/NotFoundPage";
+import { ClientPage } from "./client/ClientPage";
 
 type AppProps = {
   subscribe(callback: (next: string) => void): () => void;
@@ -21,6 +22,7 @@ const App: React.FC<AppProps> = (props) => {
 
   return (
     <Routes>
+      <Route path="/clients/:clientId" Component={ClientPage} />
       <Route path="/clients" Component={ClientsListPage} />
       <Route path="/clients/*" Component={NotFoundPage} />
     </Routes>

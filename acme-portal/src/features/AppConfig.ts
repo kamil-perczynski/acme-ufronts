@@ -21,7 +21,7 @@ export class AppConfig<T extends object> {
 
   static load<T extends object>(): AppConfig<T> {
     const configPath = path.resolve(process.cwd(), "./config.json");
-    console.debug("Reading config from: ", configPath);
+    console.debug("Reading config from:", configPath);
 
     return new AppConfig(
       fs.promises.readFile(configPath).then((bytes) => bytes.toString("utf-8")),
