@@ -21,24 +21,41 @@ export default function RootLayout(props: Props) {
   return (
     <html lang="en">
       <head>
-        <script src="https://cdn.jsdelivr.net/npm/es-module-shims@1.9.0/dist/es-module-shims.min.js" />
         <script
           type="importmap"
           dangerouslySetInnerHTML={{
             __html: JSON.stringify(
               {
                 imports: {
+                  react: "https://esm.sh/stable/react@18.2.0/es2022/react.mjs",
+                  "react-dom":
+                    "https://esm.sh/v135/react-dom@18.2.0/es2022/react-dom.bundle.mjs",
+                  "react/jsx-runtime":
+                    "https://esm.sh/stable/react@18.2.0/es2022/jsx-runtime.mjs",
                   "@acme/acme-product-catalog": toSpaUrl(
-                    "acme-product-catalog",
+                    "acme-product-catalog"
                   ),
                   "@acme/acme-clients": toSpaUrl("acme-clients"),
                 },
               },
               undefined,
-              2,
+              2
             ),
           }}
         ></script>
+        <script src="https://cdn.jsdelivr.net/npm/es-module-shims@1.9.0/dist/es-module-shims.min.js" />
+        <script
+          src="https://esm.sh/stable/react@18.2.0/es2022/react.mjs"
+          type="module"
+        />
+        <script
+          src="https://esm.sh/v135/react-dom@18.2.0/es2022/react-dom.bundle.mjs"
+          type="module"
+        />
+        <script
+          src="https://esm.sh/stable/react@18.2.0/es2022/jsx-runtime.mjs"
+          type="module"
+        />
       </head>
       <body className={inter.className}>
         {children}

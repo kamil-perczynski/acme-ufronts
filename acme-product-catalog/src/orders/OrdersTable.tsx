@@ -25,9 +25,9 @@ export const OrdersTable: React.FC<Props> = (props) => {
       <TableCaption>{title}</TableCaption>
       <TableHeader>
         <TableRow>
-          <TableHead>Invoice</TableHead>
-          <TableHead>Status</TableHead>
-          <TableHead>Product</TableHead>
+          <TableHead className="pc-w-[100px]">Invoice</TableHead>
+          <TableHead className="pc-w-[120px]">Status</TableHead>
+          <TableHead className="pc-w-[500px]">Product</TableHead>
           <TableHead className="pc-text-right">Method</TableHead>
           <TableHead className="pc-text-right">Quantity</TableHead>
           <TableHead className="pc-text-right">Amount</TableHead>

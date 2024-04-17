@@ -3,6 +3,7 @@ import { usePathname, useRouter } from "next/navigation";
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import { Parcel, ParcelConfig, mountRootParcel } from "single-spa";
 import { MicrofrontSkeleton } from "./MicrofrontSkeleton";
+import { createPortal } from "react-dom";
 
 interface Props {
   rootId?: string;
@@ -34,15 +35,18 @@ export const Microfront: React.FC<Props> = (props) => {
     }
   }, [pathname]);
 
+  const [ufrontMounted, setUfrontMounted] = useState(false);
   const [isMounted, setMounted] = useState(false);
   const [error, setError] = useState<Error | null>(null);
+
+  useEffect(() => setMounted(true), []);
 
   useEffect(() => {
     let parcelConfig: Parcel | null = null;
     let domElement: HTMLElement | null = null;
 
-    importShim(microfrontId)
-      .then((parcelModule: ParcelConfig) => {
+    Promise.all([timeoutMs(200), importShim(microfrontId)])
+      .then(([, parcelModule]: [unknown, ParcelConfig]) => {
         domElement = document.getElementById(rootId ?? microfrontId)!;
 
         parcelConfig = mountRootParcel(parcelModule, {
@@ -50,12 +54,12 @@ export const Microfront: React.FC<Props> = (props) => {
           subscribe,
         });
 
-        setMounted(true);
+        setUfrontMounted(true);
       })
       .catch((err) => {
         console.error(err);
         setError(err);
-        setMounted(true);
+        setUfrontMounted(true);
       });
 
     return () => {
@@ -63,14 +67,19 @@ export const Microfront: React.FC<Props> = (props) => {
     };
   }, [router.prefetch, subscribe, microfrontId, rootId]);
 
-  if (!isMounted) {
-    return <MicrofrontSkeleton />;
+  if (isMounted && !ufrontMounted) {
+    return createPortal(
+      <MicrofrontSkeleton />,
+      document.getElementById(rootId ?? microfrontId)!
+    );
   }
 
   if (error) {
-    return (
+    return createPortal(
       <div className="p-4 flex flex-col gap-6 mt-20 min-h-screen">
-        <h1 className="text-4xl font-semibold tracking-tight">Oops, something went wrong</h1>
+        <h1 className="text-4xl font-semibold tracking-tight">
+          Oops, something went wrong
+        </h1>
 
         <p>Please copy information below and send it to the Administrator.</p>
 
@@ -87,9 +96,14 @@ export const Microfront: React.FC<Props> = (props) => {
           <br />
           <b>Stack:</b> <br /> {error?.stack}
         </code>
-      </div>
+      </div>,
+      document.getElementById(rootId ?? microfrontId)!
     );
   }
 
   return null;
 };
+
+function timeoutMs(ms: number): Promise<unknown> {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}

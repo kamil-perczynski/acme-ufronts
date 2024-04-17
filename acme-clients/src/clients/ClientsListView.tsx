@@ -36,15 +36,12 @@ import {
   TableBody,
   TableCell,
   Checkbox,
-  Badge,
 } from "@acme/acme-ds";
 import { BankListItem } from "../features/companies";
 import { Link } from "react-router-dom";
 
 const columnNames: Record<string, string> = {
-  status: "Status",
   name: "Company name",
-  country: "Country",
   email: "E-mail",
   phone: "Phone",
   vat: "VAT",
@@ -53,6 +50,7 @@ const columnNames: Record<string, string> = {
 export const columns: ColumnDef<BankListItem>[] = [
   {
     id: "select",
+    size: 35,
     header: ({ table }) => (
       <Checkbox
         checked={
@@ -74,16 +72,8 @@ export const columns: ColumnDef<BankListItem>[] = [
     enableHiding: false,
   },
   {
-    accessorKey: "status",
-    header: "Status",
-    cell: () => (
-      <div className="c-w-[50px]">
-        <Badge>Active</Badge>
-      </div>
-    ),
-  },
-  {
     accessorKey: "name",
+    size: 420,
     header: ({ column }) => {
       return (
         <Button
@@ -104,13 +94,7 @@ export const columns: ColumnDef<BankListItem>[] = [
     ),
   },
   {
-    accessorKey: "country",
-    header: () => <div>Country</div>,
-    cell: ({ row }) => {
-      return <div className="c-font-medium">{row.getValue("country")}</div>;
-    },
-  },
-  {
+    size: 210,
     accessorKey: "email",
     header: () => <div>E-mail</div>,
     cell: ({ row }) => {
@@ -118,6 +102,7 @@ export const columns: ColumnDef<BankListItem>[] = [
     },
   },
   {
+    size: 150,
     accessorKey: "phone",
     header: ({ column }) => {
       return (
@@ -141,6 +126,7 @@ export const columns: ColumnDef<BankListItem>[] = [
     },
   },
   {
+    size: 120,
     accessorKey: "vat",
     header: () => <div className="c-text-right">VAT</div>,
     cell: ({ row }) => {
@@ -150,6 +136,7 @@ export const columns: ColumnDef<BankListItem>[] = [
     },
   },
   {
+    size: 40,
     id: "actions",
     enableHiding: false,
     cell: ({ row }) => {
@@ -192,6 +179,11 @@ export const ClientsListView: React.FC<{ banks: BankListItem[] }> = (props) => {
   const table = useReactTable({
     data: props.banks,
     columns,
+    defaultColumn: {
+      minSize: 10,
+      size: 100,
+      maxSize: 600,
+    },
     onSortingChange: setSorting,
     onColumnFiltersChange: setColumnFilters,
     getCoreRowModel: getCoreRowModel(),
@@ -251,13 +243,16 @@ export const ClientsListView: React.FC<{ banks: BankListItem[] }> = (props) => {
         </DropdownMenu>
       </div>
       <div className="c-rounded-md c-border">
-        <Table>
+        <Table className="c-table-fixed">
           <TableHeader className="bg-background">
             {table.getHeaderGroups().map((headerGroup) => (
               <TableRow key={headerGroup.id}>
                 {headerGroup.headers.map((header) => {
                   return (
-                    <TableHead key={header.id}>
+                    <TableHead
+                      style={{ width: header.getSize() }}
+                      key={header.id}
+                    >
                       {header.isPlaceholder
                         ? null
                         : flexRender(

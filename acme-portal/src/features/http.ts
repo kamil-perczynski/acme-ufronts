@@ -18,13 +18,13 @@ export async function fetchLoggedUser(): Promise<LoggedUser> {
       displayName: [fetchedUser.firstName, fetchedUser.lastName]
         .filter((it) => Boolean(it))
         .join(" "),
-      avatar: `https://api.dicebear.com/8.x/lorelei/svg?seed=${hash}`,
+      avatar: `https://api.dicebear.com/8.x/lorelei/svg?seed=${hash.sha256}`,
       hash,
     }));
 }
 
 function hashString(item: string) {
-  const hash256 = createHash("sha256").update(item).digest("hex");
+  const sha256 = createHash("sha256").update(item).digest("hex");
 
   const primes = [
     2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71,
@@ -32,9 +32,9 @@ function hashString(item: string) {
   ];
 
   let code = 277;
-  for (let i = 0; i < hash256.length; i++) {
-    code ^= primes[i] * hash256.charCodeAt(i);
+  for (let i = 0; i < sha256.length; i++) {
+    code ^= primes[i] * sha256.charCodeAt(i);
   }
 
-  return { code, hash256 };
+  return { code, sha256 };
 }
