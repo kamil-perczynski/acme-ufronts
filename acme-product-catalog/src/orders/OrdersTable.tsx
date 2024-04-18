@@ -27,10 +27,10 @@ export const OrdersTable: React.FC<Props> = (props) => {
         <TableRow>
           <TableHead className="pc-w-[100px]">Invoice</TableHead>
           <TableHead className="pc-w-[120px]">Status</TableHead>
-          <TableHead className="pc-w-[500px]">Product</TableHead>
-          <TableHead className="pc-text-right">Method</TableHead>
-          <TableHead className="pc-text-right">Quantity</TableHead>
-          <TableHead className="pc-text-right">Amount</TableHead>
+          <TableHead className="pc-w-[400px]">Product</TableHead>
+          <TableHead className="pc-text-right pc-w-[200px]">Method</TableHead>
+          <TableHead className="pc-text-right pc-w-[100px]">Quantity</TableHead>
+          <TableHead className="pc-text-right pc-w-[125px]">Amount</TableHead>
         </TableRow>
       </TableHeader>
       <TableBody>

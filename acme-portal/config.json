@@ -1,6 +1,14 @@
 {
   "ufronts": {
-    "acme-product-catalog": "http://localhost:4101",
-    "acme-clients": "http://localhost:4201"
+    "@acme/acme-product-catalog": {
+      "local-dev": "http://localhost:4101/ufronts/@acme/acme-product-catalog/src/spa.tsx",
+      "local": "http://localhost:4101/ufronts/@acme/acme-product-catalog/spa.js",
+      "remote": "https://acme-portal.test.acmeapps.click/ufronts/@acme/ acme-product-catalog/spa.js"
+    },
+    "@acme/acme-clients": {
+      "local-dev": "http://localhost:4201/ufronts/@acme/acme-clients/src/spa.tsx",
+      "local": "http://localhost:4201/ufronts/@acme/acme-clients/spa.js",
+      "remote": "https://acme-portal.test.acmeapps.click/ufronts/@acme/acme-clients/spa.js"
+    }
   }
 }

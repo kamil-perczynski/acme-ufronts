@@ -41,8 +41,8 @@ export const Dashboard: React.FC<DashboardProps> = (props) => {
   const { loggedUser } = props;
 
   return (
-    <div className="grid min-h-screen w-full md:grid-cols-[220px_1fr] bg-white lg:grid-cols-[280px_1fr]">
-      <div className="hidden border-r bg-muted/40 md:block">
+    <div className="grid min-h-screen w-full bg-white lg:grid-cols-[280px_1fr]">
+      <div className="hidden border-r bg-muted/40 lg:block">
         <div className="flex h-full max-h-screen flex-col gap-2">
           <div className="flex h-14 items-center border-b px-4 lg:h-[60px] lg:px-6">
             <Link href="/" className="flex items-center gap-2 font-semibold">
@@ -76,7 +76,7 @@ export const Dashboard: React.FC<DashboardProps> = (props) => {
             <div className="p-4 flex flex-row items-center">
               <Avatar className="bg-emerald-200 h-12 w-12">
                 <AvatarImage src={loggedUser.avatar} />
-                <AvatarFallback>
+                <AvatarFallback className="bg-emerald-200">
                   {loggedUser.displayName.substring(0, 2).toLocaleUpperCase()}
                 </AvatarFallback>
               </Avatar>
@@ -131,7 +131,7 @@ export const Dashboard: React.FC<DashboardProps> = (props) => {
               <Button
                 variant="outline"
                 size="icon"
-                className="shrink-0 md:hidden"
+                className="shrink-0 lg:hidden"
               >
                 <Menu className="h-5 w-5" />
                 <span className="sr-only">Toggle navigation menu</span>
@@ -149,7 +149,7 @@ export const Dashboard: React.FC<DashboardProps> = (props) => {
 
                 <div className="py-4 mx-[-0.65rem] flex flex-row items-center">
                   <Avatar className="bg-emerald-200 h-12 w-12">
-                    <AvatarImage src="https://api.dicebear.com/8.x/lorelei/svg?seed=kamil.perczynski" />
+                    <AvatarImage src={loggedUser.avatar} />
                     <AvatarFallback>
                       {loggedUser.displayName
                         .substring(0, 2)
@@ -162,7 +162,7 @@ export const Dashboard: React.FC<DashboardProps> = (props) => {
                       Welcome
                     </span>
                     <span className="block px-3 font-semibold text-large">
-                      {loggedUser.name}
+                      {loggedUser.displayName}
                     </span>
                   </div>
                 </div>

@@ -4,7 +4,7 @@ import vitePluginSingleSpa from "vite-plugin-single-spa";
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  base: "/ufronts/acme-clients",
+  base: "/ufronts/@acme/acme-clients",
   plugins: [
     react(),
     vitePluginSingleSpa({

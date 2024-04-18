@@ -3,6 +3,9 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import { Footer } from "./components/Footer/Footer";
 import "./globals.css";
+import { AppConfig } from "~/features/AppConfig";
+import { Configuration, UfrontEnvName } from "~/global";
+import { toUfrontUrl } from "~/features/ufronts/ufrontUrls";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -15,8 +18,17 @@ type Props = Readonly<{
   children: React.ReactNode;
 }>;
 
-export default function RootLayout(props: Props) {
+const appConfig = AppConfig.load<Configuration>();
+
+export default async function RootLayout(props: Props) {
   const { children } = props;
+
+  const config = await appConfig.get();
+
+  const ufronts: Record<string, string> = {};
+  Object.entries(config.ufronts).forEach(([ufront]) => {
+    ufronts[ufront] = new URL(toUfrontUrl(ufront, config)).pathname;
+  });
 
   return (
     <html lang="en">
@@ -32,10 +44,7 @@ export default function RootLayout(props: Props) {
                     "https://esm.sh/v135/react-dom@18.2.0/es2022/react-dom.bundle.mjs",
                   "react/jsx-runtime":
                     "https://esm.sh/stable/react@18.2.0/es2022/jsx-runtime.mjs",
-                  "@acme/acme-product-catalog": toSpaUrl(
-                    "acme-product-catalog"
-                  ),
-                  "@acme/acme-clients": toSpaUrl("acme-clients"),
+                  ...ufronts,
                 },
               },
               undefined,
@@ -63,11 +72,4 @@ export default function RootLayout(props: Props) {
       </body>
     </html>
   );
-}
-
-function toSpaUrl(ufront: string) {
-  const spaPath =
-    process.env.NODE_ENV == "development" ? "src/spa.tsx" : "spa.js";
-
-  return `/ufronts/${ufront}/${spaPath}`;
 }

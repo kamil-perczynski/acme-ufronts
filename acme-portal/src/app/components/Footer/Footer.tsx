@@ -23,7 +23,7 @@ export const Footer: React.FC<Props> = (props) => {
             "w-full border-t-[1px] border-zinc-800 p-10 lg:p-24 bg-black bottom-[0] flex flex-col lg:flex-row lg:gap-x-10 gap-y-10",
           )}
         >
-          <div className="lg:w-[15%]">
+          <div className="lg:w-[18%]">
             <Link href="/" className="flex items-center gap-2 font-semibold">
               <Zap className="h-10 w-10" />
               <span className="text-2xl pl-2">Acme Shim Corp.</span>

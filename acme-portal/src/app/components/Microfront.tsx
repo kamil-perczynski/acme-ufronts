@@ -17,7 +17,6 @@ export const Microfront: React.FC<Props> = (props) => {
   const router = useRouter();
 
   const subscription = useRef<null | ((nextPath: string) => void)>(null);
-
   const subscribe = useCallback(
     (onRouteChanged: (nextPath: string) => void) => {
       subscription.current = onRouteChanged;
@@ -46,7 +45,7 @@ export const Microfront: React.FC<Props> = (props) => {
     let domElement: HTMLElement | null = null;
 
     Promise.all([timeoutMs(200), importShim(microfrontId)])
-      .then(([, parcelModule]: [unknown, ParcelConfig]) => {
+      .then(async ([, parcelModule]: [unknown, ParcelConfig]) => {
         domElement = document.getElementById(rootId ?? microfrontId)!;
 
         parcelConfig = mountRootParcel(parcelModule, {
@@ -76,7 +75,7 @@ export const Microfront: React.FC<Props> = (props) => {
 
   if (error) {
     return createPortal(
-      <div className="p-4 flex flex-col gap-6 mt-20 min-h-screen">
+      <div className="flex flex-col gap-6 mt-20 min-h-screen">
         <h1 className="text-4xl font-semibold tracking-tight">
           Oops, something went wrong
         </h1>

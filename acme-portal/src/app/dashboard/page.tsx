@@ -10,6 +10,14 @@ export default async function ProductCatalogPage() {
   return (
     <main className="w-full min-h-screen overflow-x-hidden">
       <Dashboard loggedUser={loggedUser}>
+        <Container id="@acme/acme-product-catalog">
+          <Microfront microfrontId="@acme/acme-product-catalog" />
+        </Container>
+
+        <br />
+        <hr />
+        <br />
+
         <Container id="@acme/acme-clients">
           <Microfront microfrontId="@acme/acme-clients" />
         </Container>
