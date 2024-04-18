@@ -62,7 +62,12 @@ export const Microfront: React.FC<Props> = (props) => {
       });
 
     return () => {
-      parcelConfig?.unmount().then(() => domElement?.remove());
+      parcelConfig?.unmount().then(
+        () => domElement?.remove(),
+        (err) => {
+          console.log(err);
+        }
+      );
     };
   }, [router.prefetch, subscribe, microfrontId, rootId]);
 

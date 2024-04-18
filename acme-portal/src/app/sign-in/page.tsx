@@ -10,7 +10,7 @@ export default function SignInPage() {
 
   const handleSubmit = (e: React.SyntheticEvent) => {
     e.preventDefault();
-    router.push("/clients");
+    router.push("/dashboard");
   };
 
   return (

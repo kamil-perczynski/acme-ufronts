@@ -53,7 +53,7 @@ export default async function RootLayout(props: Props) {
           }}
         ></script>
         <script src="https://cdn.jsdelivr.net/npm/es-module-shims@1.9.0/dist/es-module-shims.min.js" />
-        <script
+        {/* <script
           src="https://esm.sh/stable/react@18.2.0/es2022/react.mjs"
           type="module"
         />
@@ -64,7 +64,7 @@ export default async function RootLayout(props: Props) {
         <script
           src="https://esm.sh/stable/react@18.2.0/es2022/jsx-runtime.mjs"
           type="module"
-        />
+        /> */}
       </head>
       <body className={inter.className}>
         {children}

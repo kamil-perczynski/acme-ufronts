@@ -33,7 +33,6 @@ export async function GET(
   const proxiedUrl = new URL(pathname + search, ufrontBaseUrl);
 
   const response = await fetch(proxiedUrl, {
-    cache: "force-cache",
     headers: request.headers,
   });
 

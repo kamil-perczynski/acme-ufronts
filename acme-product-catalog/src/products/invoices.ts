@@ -1,4 +1,15 @@
-export const invoices = [
+export interface Invoice {
+  invoice: string;
+  paymentStatus: string;
+  totalAmount: string;
+  paymentMethod: string;
+  id: number;
+  uid: string;
+  brand: string;
+  equipment: string;
+}
+
+export const invoices: Invoice[] = [
   {
     invoice: "INV001",
     paymentStatus: "Paid",

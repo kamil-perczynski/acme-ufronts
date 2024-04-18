@@ -1,8 +1,18 @@
-import { useEffect } from "react";
+import React, { useEffect } from "react";
 import { Route, Routes, useNavigate } from "react-router-dom";
-import { ClientsListPage as ClientsListPage } from "./clients/ClientsListPage";
 import { NotFoundPage } from "./NotFoundPage/NotFoundPage";
-import { ClientPage } from "./client/ClientPage";
+
+const ClientsListPage = React.lazy(() =>
+  import("./clients/ClientsListPage").then((it) => ({
+    default: it.ClientsListPage,
+  }))
+);
+const ClientPage = React.lazy(() =>
+  import("./client/ClientPage").then((it) => ({ default: it.ClientPage }))
+);
+const Dashboard = React.lazy(() =>
+  import("./dashboard/Dashboard").then((it) => ({ default: it.Dashboard }))
+);
 
 type AppProps = {
   subscribe(callback: (next: string) => void): () => void;
@@ -22,6 +32,7 @@ const App: React.FC<AppProps> = (props) => {
 
   return (
     <Routes>
+      <Route path="/dashboard" Component={Dashboard} />
       <Route path="/clients/:clientId" Component={ClientPage} />
       <Route path="/clients" Component={ClientsListPage} />
       <Route path="/clients/*" Component={NotFoundPage} />

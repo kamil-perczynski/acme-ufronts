@@ -9,16 +9,16 @@ import {
   Badge,
   TableFooter,
 } from "@acme/acme-ds";
-import React from "react";
-import { invoices } from "../products/invoices";
-import styles from "./OrdersTable.module.css";
+import styles from "./InvoicesTable.module.css";
+import type { Invoice } from "../../products/invoices";
 
-interface Props {
+export interface Props {
   title: string;
+  invoices: Invoice[];
 }
 
-export const OrdersTable: React.FC<Props> = (props) => {
-  const { title } = props;
+export const InvoicesTable: React.FC<Props> = (props) => {
+  const { title, invoices } = props;
 
   return (
     <Table className={styles.orders}>
@@ -39,9 +39,6 @@ export const OrdersTable: React.FC<Props> = (props) => {
             <TableCell className="pc-font-medium">{invoice.invoice}</TableCell>
             <TableCell className="pc-flex pc-content-end">
               <Badge
-                className={
-                  invoice.paymentStatus === "Paid" ? "pc-bg-accent" : undefined
-                }
                 variant={
                   invoice.paymentStatus == "Unpaid" ? "destructive" : "default"
                 }

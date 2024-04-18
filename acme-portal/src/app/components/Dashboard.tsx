@@ -94,7 +94,7 @@ export const Dashboard: React.FC<DashboardProps> = (props) => {
             <nav className="grid items-start px-2 text-sm font-medium lg:px-4">
               <DashboardItem
                 icon={<Home className="h-4 w-4" />}
-                href="/product-catalog"
+                href="/dashboard"
                 text="Dashboard"
               />
               <DashboardItem
