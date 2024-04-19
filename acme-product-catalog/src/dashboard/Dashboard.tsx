@@ -12,35 +12,46 @@ export const Dashboard: React.FC = () => {
         <br />
         Explore the Three.js development through our recent articles.
       </p>
-      <div className="pc-grid pc-grid-cols[1fr] lg:pc-grid-cols-[1fr_1fr_1fr] pc-gap-6 pc-h-[900px] lg:pc-h-[23rem]">
-        <Card
-          style={{
-            background: `url(https://threejs.org/examples/screenshots/webgl_instancing_dynamic.jpg)`,
-            backgroundSize: "cover",
-            backgroundPosition: "50% 50%",
-          }}
-        >
-          Boo
-        </Card>
-        <Card
-          style={{
-            background: `url(https://henryegloff.com/media/jess-zhou-three.js-1600x1100.jpg)`,
-            backgroundSize: "cover",
-            backgroundPosition: "50% 50%",
-          }}
-        >
-          Foo
-        </Card>
-        <Card
-          className="pc-shadow-md"
-          style={{
-            background: `url(https://preview.redd.it/5qmeuaufad091.png?width=1024&format=png&auto=webp&s=0a19529bff9e096879bf5275e502d51ea829f6f6)`,
-            backgroundSize: "cover",
-            backgroundPosition: "50% 50%",
-          }}
-        >
-          Foo
-        </Card>
+
+      <div className="pc-grid pc-grid-cols[1fr] md:pc-grid-cols-[1fr_1fr_1fr] pc-gap-6">
+        <div className="pc-space-y-4">
+          <Card
+            className="pc-h-[300px] lg:pc-h-[23rem] pc-bg-cover pc-bg-center"
+            style={{
+              backgroundImage: `url(https://threejs.org/examples/screenshots/webgl_instancing_dynamic.jpg)`,
+            }}
+          />
+          <div className="pc-space-y-1 pc-text-sm">
+            <h3 className="pc-font-medium pc-leading-none">React Rendezvous</h3>
+            <p className="pc-text-xs pc-text-muted-foreground">Ethan Byte</p>
+          </div>
+        </div>
+
+        <a href="/clients" className="pc-space-y-4">
+          <Card
+            className="pc-h-[300px] lg:pc-h-[23rem] pc-bg-cover pc-bg-center"
+            style={{
+              backgroundImage: `url(https://henryegloff.com/media/jess-zhou-three.js-1600x1100.jpg)`,
+            }}
+          />
+          <div className="pc-space-y-1 pc-text-sm">
+            <h3 className="pc-font-medium pc-leading-none">React Rendezvous</h3>
+            <p className="pc-text-xs pc-text-muted-foreground">Ethan Byte</p>
+          </div>
+        </a>
+
+        <div className="pc-space-y-4">
+          <Card
+            className="pc-h-[300px] lg:pc-h-[23rem] pc-bg-cover pc-bg-center"
+            style={{
+              backgroundImage: `url(https://preview.redd.it/5qmeuaufad091.png?width=1024&format=png&auto=webp&s=0a19529bff9e096879bf5275e502d51ea829f6f6)`,
+            }}
+          />
+          <div className="pc-space-y-1 pc-text-sm">
+            <h3 className="pc-font-medium pc-leading-none">React Rendezvous</h3>
+            <p className="pc-text-xs pc-text-muted-foreground">Ethan Byte</p>
+          </div>
+        </div>
       </div>
 
       <h2 className="pc-text-2xl pc-font-semibold">Recent orders</h2>
@@ -51,3 +62,5 @@ export const Dashboard: React.FC = () => {
     </div>
   );
 };
+
+export const Component = Dashboard;

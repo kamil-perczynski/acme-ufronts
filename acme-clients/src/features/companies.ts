@@ -50,7 +50,7 @@ export interface Address2 {
   longitude: number;
 }
 
-export async function fetchBanks() {
+export async function fetchBanks(): Promise<BankListItem[]> {
   return fetch(
     "https://fakerapi.it/api/v1/companies?_quantity=60&_seed=03948123094"
   )

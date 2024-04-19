@@ -15,7 +15,7 @@ export default defineConfig({
     }),
   ],
   build: {
-    sourcemap: process.env.GENERATE_SOURCEMAP !== "false",
+    sourcemap: process.env.GENERATE_SOURCEMAP === "true",
     rollupOptions: {
       external: ["react", "react-dom", "react/jsx-runtime"],
     },

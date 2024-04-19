@@ -64,17 +64,17 @@ export const Microfront: React.FC<Props> = (props) => {
     return () => {
       parcelConfig?.unmount().then(
         () => domElement?.remove(),
-        (err) => {
-          console.log(err);
-        }
+        (err) => console.log(err)
       );
     };
   }, [router.prefetch, subscribe, microfrontId, rootId]);
 
+  const containerElId = rootId ?? microfrontId;
+
   if (isMounted && !ufrontMounted) {
     return createPortal(
       <MicrofrontSkeleton />,
-      document.getElementById(rootId ?? microfrontId)!
+      document.getElementById(containerElId)!
     );
   }
 

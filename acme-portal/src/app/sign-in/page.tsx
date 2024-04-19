@@ -24,10 +24,16 @@ export default function SignInPage() {
                 Enter your email below to login to your account
               </p>
             </div>
-            <form onSubmit={handleSubmit} className="grid gap-4">
+
+            <form
+              autoComplete="off"
+              onSubmit={handleSubmit}
+              className="grid gap-4"
+            >
               <div className="grid gap-2">
                 <Label htmlFor="email">Email</Label>
                 <Input
+                  autoComplete="off"
                   className="bg-white"
                   autoFocus
                   id="email"
@@ -41,6 +47,7 @@ export default function SignInPage() {
                   <Label htmlFor="password">Password</Label>
                 </div>
                 <Input
+                  autoComplete="off"
                   id="password"
                   className="bg-white"
                   type="password"

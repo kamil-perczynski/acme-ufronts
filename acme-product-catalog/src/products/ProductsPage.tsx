@@ -2,6 +2,7 @@ import React from "react";
 import { invoices } from "./invoices";
 
 import { InvoicesTable } from "../components/InvoicesTable/InvoicesTable";
+import { Link } from "react-router-dom";
 
 interface Props {}
 
@@ -12,7 +13,7 @@ export const ProductsPage: React.FC<Props> = () => {
         Products
       </h1>
 
-      <p>Table goes here</p>
+      <p>Table goes <Link to="/product-catalog/orders">here</Link></p>
 
       <div className="pc-rounded-md pc-mt-4 pc-border">
         <InvoicesTable title="Recent invoices" invoices={invoices} />
@@ -20,3 +21,5 @@ export const ProductsPage: React.FC<Props> = () => {
     </div>
   );
 };
+
+export const Component = ProductsPage;

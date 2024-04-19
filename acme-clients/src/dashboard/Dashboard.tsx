@@ -90,3 +90,5 @@ const data = [
     amt: 2100,
   },
 ];
+
+export const Component = Dashboard;

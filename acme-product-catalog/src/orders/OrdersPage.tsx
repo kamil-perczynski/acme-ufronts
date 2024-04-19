@@ -32,3 +32,5 @@ export const OrdersPage: React.FC<Props> = () => {
     </div>
   );
 };
+
+export const Component = OrdersPage;

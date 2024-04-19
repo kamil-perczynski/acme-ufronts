@@ -11,7 +11,7 @@ export default async function ProductCatalogPage() {
     <main className="w-full min-h-screen overflow-x-hidden">
       <Dashboard loggedUser={loggedUser}>
         <Container className="flex flex-col gap-4 mt-4 lg:pb-24">
-          <h1 className="pc-text-4xl pc-font-semibold pc-border-b-[1px] pc-border-gray pc-pb-2">
+          <h1 className="text-4xl font-semibold border-b-[1px] border-gray pb-2">
             Dashboard
           </h1>
 

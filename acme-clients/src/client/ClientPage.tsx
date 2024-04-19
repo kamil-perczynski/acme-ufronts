@@ -1,26 +1,11 @@
-import { useEffect, useState } from "react";
 import { BankListItem, fetchBanks } from "../features/companies";
-import { Skeleton } from "@acme/acme-ds";
-import { useParams } from "react-router-dom";
+import { Params, useLoaderData, useParams } from "react-router-dom";
 
 interface Props {}
 
 export const ClientPage: React.FC<Props> = () => {
   const { clientId } = useParams<{ clientId: string }>();
-  const [banks, setBanks] = useState<BankListItem[]>([]);
-  const [isLoading, setLoading] = useState<boolean>(true);
-
-  useEffect(() => {
-    fetchBanks()
-      .then((banks) => setBanks(banks))
-      .finally(() => setLoading(false));
-  }, []);
-
-  const bank = banks.find((item) => item.id.toString() === clientId);
-
-  if (isLoading) {
-    return <Skeleton />;
-  }
+  const bank = useLoaderData() as BankListItem;
 
   if (!bank) {
     return (
@@ -46,3 +31,9 @@ export const ClientPage: React.FC<Props> = () => {
     </div>
   );
 };
+
+export const Component = ClientPage;
+export const loader = ({ params }: { params: Params }) =>
+  fetchBanks().then((banks) =>
+    banks.find((bank) => String(bank.id) === params.clientId)
+  );

@@ -148,8 +148,8 @@ export const Dashboard: React.FC<DashboardProps> = (props) => {
                 </Link>
 
                 <div className="py-4 mx-[-0.65rem] flex flex-row items-center">
-                  <Avatar className="bg-emerald-200 h-12 w-12">
-                    <AvatarImage src={loggedUser.avatar} />
+                  <Avatar  className="bg-emerald-200 h-12 w-12">
+                    <img width={64} src={loggedUser.avatar} alt={loggedUser.displayName} />
                     <AvatarFallback>
                       {loggedUser.displayName
                         .substring(0, 2)
