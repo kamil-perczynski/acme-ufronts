@@ -13,6 +13,7 @@
     "@acme/acme-ds": "file:../acme-ds/acme-acme-ds-0.0.0.tgz",
     "@tanstack/react-table": "^8.16.0",
     "react": "^18.2.0",
+    "react-data-grid": "^7.0.0-beta.43",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.22.3",
     "recharts": "^2.12.5",

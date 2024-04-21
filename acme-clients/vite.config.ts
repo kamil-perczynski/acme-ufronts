@@ -10,7 +10,7 @@ export default defineConfig({
     vitePluginSingleSpa({
       type: "mife",
       serverPort: 4201,
-      cssStrategy: "singleMife",
+      cssStrategy: "multiMife",
       spaEntryPoints: "src/spa.tsx",
     }),
   ],

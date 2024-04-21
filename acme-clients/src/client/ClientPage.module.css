@@ -1,0 +1,30 @@
+.datagrid [role="gridcell"]:not(:last-child),
+.datagrid [role="columnheader"]:not(:last-child) {
+  border-block-end: 1px solid hsl(var(--border));
+  border-inline-end: 1px solid hsl(var(--border));
+}
+
+.datagrid,
+.datagrid * {
+  background: hsl(var(--background));
+  color: inherit;
+}
+
+.datagrid [role="gridcell"],
+.datagrid [role="columnheader"] {
+  border-block-end: 1px solid hsl(var(--border));
+}
+
+.datagrid [role="columnheader"],
+.datagrid [role="columnheader"] * {
+  @apply c-bg-muted c-font-medium c-text-muted-foreground;
+}
+
+.datagrid [data-highlighted="true"],
+.datagrid [data-highlighted="true"] * {
+  @apply !c-bg-blue-100 !c-border-blue-300;
+}
+
+.datagrid *[role="columnheader"] :global(.rdg-sort-arrow) {
+  @apply c-translate-x-[-2px] c-translate-y-[14px];
+}

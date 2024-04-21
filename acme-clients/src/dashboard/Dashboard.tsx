@@ -18,13 +18,12 @@ export const Dashboard: React.FC = () => {
 
       <ResponsiveContainer width="100%" height={400}>
         <BarChart
-          width={500}
           height={300}
           data={data}
           margin={{
             top: 5,
-            right: 30,
-            left: 20,
+            right: 5,
+            left: 5,
             bottom: 5,
           }}
         >
@@ -34,11 +33,7 @@ export const Dashboard: React.FC = () => {
           <Tooltip />
           <Legend align="left" />
           <ReferenceLine y={0} stroke="#000" />
-          <Bar
-            dataKey="income"
-            radius={4}
-            fill="hsl(var(--accent))"
-          />
+          <Bar dataKey="income" radius={4} fill="hsl(var(--accent))" />
           <Bar dataKey="costs" radius={4} fill="var(--secondary)" />
         </BarChart>
       </ResponsiveContainer>
@@ -48,45 +43,63 @@ export const Dashboard: React.FC = () => {
 
 const data = [
   {
-    name: "January 2023",
+    name: "I 2023",
     income: 4000,
     costs: -2400,
     amt: 2400,
   },
   {
-    name: "February 2023",
+    name: "II 2023",
     income: 3000,
     costs: -1398,
     amt: 2210,
   },
   {
-    name: "March 2023",
+    name: "III 2023",
     income: 2000,
     costs: -4800,
     amt: 2290,
   },
   {
-    name: "April 2023",
+    name: "IV 2023",
     income: 2780,
     costs: -3908,
     amt: 2000,
   },
   {
-    name: "May 2023",
+    name: "V 2023",
     income: 1890,
     costs: -4800,
     amt: 2181,
   },
   {
-    name: "June 2023",
+    name: "VI 2023",
     income: 2390,
     costs: -3800,
     amt: 2500,
   },
   {
-    name: "July 2023",
+    name: "VII 2023",
     income: 3490,
     costs: -4300,
+    amt: 2100,
+  },
+  {
+    name: "VIII 2023",
+    income: 3490,
+    costs: -300,
+    amt: 2100,
+  },
+  {
+    name: "IX 2023",
+    income: 3890,
+    costs: -1300,
+    amt: 2100,
+  },
+  {
+    name: "X 2023",
+    income: 3090,
+    costs: -1300,
     amt: 2100,
   },
 ];
