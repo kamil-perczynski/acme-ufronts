@@ -1,83 +1,59 @@
 import { BankListItem, fetchBanks } from "../features/companies";
 import { Params, useLoaderData, useParams } from "react-router-dom";
-import { useCallback, useEffect, useRef, useState } from "react";
-import DataGrid, { CellSelectArgs, Column, textEditor } from "react-data-grid";
+import { useState } from "react";
+import { Column, textEditor } from "react-data-grid";
 
-import styles from "./ClientPage.module.css";
+import { usageCols, usageRows } from "./data";
+import { ExcelDataGrid } from "./ExcelDataGrid/ExcelDataGrid";
+import {
+  TableHeader,
+  TableRow,
+  TableHead,
+  TableBody,
+  TableCell,
+  Table,
+  Tabs,
+  TabsContent,
+  TabsList,
+  TabsTrigger,
+} from "@acme/acme-ds";
 
-const columns: Column<Row>[] = [
+import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
+import { DollarSign, GaugeCircle } from "lucide-react";
+import { UsageChart } from "../clients/UsageChart/UsageChart";
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const columns: Column<any>[] = [
   {
     key: "label",
     name: "#",
     editable: false,
-    sortable: false,
     resizable: false,
     draggable: false,
     frozen: true,
+    sortable: true,
+    width: 40,
   },
-  ...new Array(20).fill(0).map(
-    (_, i) =>
+  ...usageCols.map(
+    (col) =>
       ({
-        key: "col" + i,
-        name: String.fromCharCode("A".charCodeAt(0) + i),
+        key: col.key,
+        name: col.name,
         sortable: true,
-        width: 150,
-        draggable: true,
+        minWidth: 150,
+        draggable: false,
         renderEditCell: textEditor,
         resizable: true,
         editorOptions: {
           displayCellContent: true,
         },
-      } as Column<Row>)
+      } as Column<unknown>)
   ),
 ];
 
-interface Row {
-  label: string;
-  col0: string;
-  col1: string;
-  col2: string;
-  col3: string;
-  col4: string;
-  col5: string;
-  col6: string;
-  col7: string;
-  col8: string;
-  col9: string;
-  col10: string;
-  col11: string;
-  col12: string;
-  col13: string;
-  col14: string;
-  col15: string;
-  col16: string;
-  col17: string;
-  col18: string;
-  col19: string;
-}
-
-const initialRows: Row[] = new Array(100).fill(0).map((_, i) => ({
-  label: String(i + 1),
-  col0: "---",
-  col1: "---",
-  col2: "---",
-  col3: "---",
-  col4: "---",
-  col5: "---",
-  col6: "---",
-  col7: "---",
-  col8: "---",
-  col9: "---",
-  col10: "---",
-  col11: "---",
-  col12: "---",
-  col13: "---",
-  col14: "---",
-  col15: "---",
-  col16: "---",
-  col17: "---",
-  col18: "---",
-  col19: "---",
+const initialRows = usageRows.map((row, i) => ({
+  label: i + 1,
+  ...row,
 }));
 
 interface Props {}
@@ -88,150 +64,7 @@ export const ClientPage: React.FC<Props> = () => {
 
   const [rows, setRows] = useState(initialRows);
 
-  const [selectionCoords, setSelection] = useState<
-    [number, number, number, number]
-  >([-1, -1, -1, -1]);
-
-  const selectedCells = useRef<HTMLElement[]>([]);
-  useEffect(() => {
-    if (selectionCoords.includes(-1)) {
-      return;
-    }
-    const [x1, y1, x2, y2] = selectionCoords;
-    const startX = Math.min(x1, x2);
-    const endX = Math.max(x1, x2);
-    const startY = Math.min(y1, y2);
-    const endY = Math.max(y1, y2);
-
-    const cells: HTMLElement[] = [];
-    for (let i = startX; i <= endX; i++) {
-      for (let j = startY; j <= endY; j++) {
-        const el = document.querySelector(
-          `[aria-rowindex="${j}"] [aria-colindex="${i}"]`
-        );
-        cells.push(el as unknown as HTMLElement);
-      }
-    }
-
-    cells.forEach((el) => el?.setAttribute("data-highlighted", "true"));
-    selectedCells.current = cells;
-
-    const listener = (): void => {
-      let currentLine: string[] = [];
-      const lines: string[][] = [currentLine];
-
-      for (let j = startY; j <= endY; j++) {
-        for (let i = startX; i <= endX; i++) {
-          const el = document.querySelector(
-            `[aria-rowindex="${j}"] [aria-colindex="${i}"]`
-          );
-          currentLine.push(el?.textContent?.trim() ?? "");
-        }
-        currentLine = [];
-        lines.push(currentLine);
-      }
-
-      const newLocal = lines
-        .map((line) => line.join("\t"))
-        .filter((it) => Boolean(it))
-        .join("\n");
-      console.log('"', newLocal, '"');
-      navigator.clipboard.writeText(newLocal);
-    };
-    document.addEventListener("copy", listener);
-    return () => {
-      selectedCells.current.forEach((el) =>
-        el?.removeAttribute("data-highlighted")
-      );
-      document.removeEventListener("copy", listener);
-    };
-  }, [selectionCoords, selectedCells]);
-
-  const isShiftEnabled = useRef<boolean>();
-
-  useEffect(() => {
-    const listener = (e: KeyboardEvent): void => {
-      isShiftEnabled.current = e.shiftKey;
-    };
-    document.addEventListener("keydown", listener);
-    document.addEventListener("keyup", listener);
-    return () => {
-      document.removeEventListener("keydown", listener);
-      document.removeEventListener("keyup", listener);
-    };
-  }, [isShiftEnabled]);
-
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const handleSelectedCellChanged = (e: CellSelectArgs<Row>) => {
-    const colIdx = e.column.idx + 1;
-    const rowIdx = e.rowIdx + 2;
-    if (!isShiftEnabled.current) {
-      setSelection([colIdx, rowIdx, -1, -1]);
-    }
-
-    if (isShiftEnabled.current) {
-      setSelection((current) => [current[0], current[1], colIdx, rowIdx]);
-    }
-  };
-
-  const handlePaste = (e: React.ClipboardEvent<HTMLDivElement>) => {
-    const incomingText = e.clipboardData.getData("text");
-    if (incomingText.includes("\t") || incomingText.includes("\n")) {
-      e.preventDefault();
-      const grid = incomingText.split("\n").map((line) => line.split("\t"));
-
-      const nextRows = [...rows];
-
-      const [x1, y1, x2, y2] = selectionCoords;
-      const startX = x2 === -1 ? x1 : Math.min(x1, x2);
-      const startY = y2 === -1 ? y1 : Math.min(y1, y2);
-
-      for (const [i, incomingRow] of grid.entries()) {
-        const rowIdx = startY + i - 2;
-        const row = { ...nextRows[rowIdx] };
-        nextRows[rowIdx] = row;
-
-        for (const [j, incomingCell] of incomingRow.entries()) {
-          const colKey = columns[startX + j - 1].key;
-
-          nextRows[rowIdx][colKey as keyof Row] = incomingCell;
-        }
-      }
-      setRows(nextRows);
-    }
-  };
-
-  const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-
-  const redrawSelection = useCallback(() => {
-    if (timeoutRef.current) {
-      clearTimeout(timeoutRef.current);
-    }
-    if (selectionCoords.includes(-1)) {
-      return;
-    }
-
-    timeoutRef.current = setTimeout(() => {
-      const [x1, y1, x2, y2] = selectionCoords;
-      const startX = Math.min(x1, x2);
-      const endX = Math.max(x1, x2);
-      const startY = Math.min(y1, y2);
-      const endY = Math.max(y1, y2);
-
-      const cells: HTMLElement[] = [];
-      for (let i = startX; i <= endX; i++) {
-        for (let j = startY; j <= endY; j++) {
-          const el = document.querySelector(
-            `[aria-rowindex="${j}"] [aria-colindex="${i}"]`
-          );
-          cells.push(el as unknown as HTMLElement);
-        }
-      }
-
-      cells.forEach((el) => el?.setAttribute("data-highlighted", "true"));
-      selectedCells.current = cells;
-    }, 30);
-  }, [timeoutRef, selectionCoords]);
+  const currentAddress = bank.addresses[0];
 
   if (!bank) {
     return (
@@ -243,33 +76,168 @@ export const ClientPage: React.FC<Props> = () => {
     );
   }
 
+  const latlng: [number, number] = [
+    51 + (currentAddress.latitude % 10),
+    18 + (currentAddress.latitude % 10),
+  ];
+
   return (
-    <div className="c-flex c-flex-col c-gap-4 c-mt-4 c-lg:mt-12">
-      <h1 className="c-text-4xl c-font-semibold c-mb-6 c-border-b-[1px] c-border-gray c-pb-2">
+    <div className="c-flex c-flex-col c-gap-8 c-mt-4 c-lg:mt-12 c-pb-10">
+      <h1 className="c-text-4xl c-font-semibold c-mb-2 c-border-b-[1px] c-border-gray c-pb-2">
         {bank.name}
       </h1>
 
-      <div
-        className="c-border c-rounded-md"
-        style={{ userSelect: "none" }}
-        onPaste={handlePaste}
-      >
-        <DataGrid
-          style={{ height: 800, position: "relative" }}
-          onRowsChange={setRows}
-          onSelectedCellChange={handleSelectedCellChanged}
-          sortColumns={[{ columnKey: "col1", direction: "ASC" }]}
-          className={`${styles.datagrid}`}
-          columns={columns}
-          onScroll={redrawSelection}
-          rows={rows}
-        />
+      <div className="c-flex c-flex-row c-gap-4">
+        <div className="c-rounded-xl c-w-full c-border c-bg-card c-text-card-foreground c-shadow">
+          <div className="c-p-6 flex c-flex-row c-items-center c-justify-between c-space-y-0 c-pb-2">
+            <h3 className="c-tracking-tight c-text-sm c-font-medium">
+              Upcoming invoice
+            </h3>
+            <DollarSign stroke="hsl(var(--accent))" />
+          </div>
+
+          <div className="c-p-6 c-pt-0">
+            <div className="c-text-2xl c-text-primary c-font-bold">
+              $45,231.89
+            </div>
+            <p className="c-text-xs c-text-muted-foreground">
+              +20.1% from last month
+            </p>
+          </div>
+        </div>
+
+        <div className="c-rounded-xl c-w-full c-border c-bg-card c-text-card-foreground c-shadow">
+          <div className="c-p-6 flex c-flex-row c-items-center c-justify-between c-space-y-0 c-pb-2">
+            <h3 className="c-tracking-tight c-text-sm c-font-medium">
+              Total API requests
+            </h3>
+            <GaugeCircle stroke="hsl(var(--accent))" />
+          </div>
+          <div className="c-p-6 c-pt-0">
+            <div className="c-text-2xl c-text-primary c-font-bold">
+              ~915,231
+            </div>
+            <p className="c-text-xs c-text-muted-foreground">
+              +24.21% from last month
+            </p>
+          </div>
+        </div>
       </div>
+
+      <h3 className="c-tracking-tight c-text-2xl c-font-semibold">
+        Usage data
+      </h3>
+
+      <Tabs defaultValue="chart">
+        <TabsList>
+          <TabsTrigger className="c-w-[320px]" value="chart">
+            Usage chart
+          </TabsTrigger>
+          <TabsTrigger className="c-w-[320px]" value="report">
+            API usage report
+          </TabsTrigger>
+        </TabsList>
+        <TabsContent value="chart" className="c-pt-4">
+          <UsageChart />
+        </TabsContent>
+        <TabsContent value="report" className="c-pt-4">
+          <ExcelDataGrid
+            title="API usage report"
+            columns={columns}
+            rows={rows}
+            setRows={setRows}
+          />
+        </TabsContent>
+      </Tabs>
+
+      <h3 className="c-tracking-tight c-text-2xl c-font-semibold">
+        Client information
+      </h3>
+      <div className="c-border c-rounded-md">
+        <Table className="c-table-fixed">
+          <TableHeader>
+            <TableRow>
+              <TableHead className="c-w-[250px]">-</TableHead>
+              <TableHead className="c-w-[750px]">-</TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            <TableRow>
+              <TableCell>Client name</TableCell>
+              <TableCell className="c-font-medium">{bank.name}</TableCell>
+            </TableRow>
+            <TableRow>
+              <TableCell>Identifier</TableCell>
+              <TableCell className="c-font-medium">{bank.id}</TableCell>
+            </TableRow>
+            <TableRow>
+              <TableCell>Country</TableCell>
+              <TableCell className="c-font-medium">{bank.country}</TableCell>
+            </TableRow>
+            <TableRow>
+              <TableCell>E-Mail</TableCell>
+              <TableCell className="c-font-medium">{bank.email}</TableCell>
+            </TableRow>
+            <TableRow>
+              <TableCell>Phone</TableCell>
+              <TableCell className="c-font-medium">{bank.phone}</TableCell>
+            </TableRow>
+            <TableRow>
+              <TableCell>VAT ID</TableCell>
+              <TableCell className="c-font-medium">{bank.vat}</TableCell>
+            </TableRow>
+            <TableRow>
+              <TableCell>Country</TableCell>
+              <TableCell className="c-font-medium">
+                {currentAddress.country}
+              </TableCell>
+            </TableRow>
+            <TableRow>
+              <TableCell>Address</TableCell>
+              <TableCell className="c-font-medium">
+                {currentAddress.street}, {currentAddress.city}{" "}
+                {currentAddress.zipcode}, {currentAddress.county_code}
+              </TableCell>
+            </TableRow>
+            <TableRow>
+              <TableCell>Website</TableCell>
+              <TableCell className="c-font-medium">
+                <a
+                  rel="nofollow"
+                  target="_blank"
+                  className="hover:underline"
+                  href={bank.website}
+                >
+                  {bank.website}
+                </a>
+              </TableCell>
+            </TableRow>
+          </TableBody>
+        </Table>
+      </div>
+
+      <MapContainer
+        className="c-rounded-md c-border c-hue-rotate-[266deg]"
+        style={{ width: "100%", height: 400 }}
+        center={latlng}
+        zoom={7}
+        scrollWheelZoom={false}
+      >
+        <TileLayer
+          className="c-grayscale c-invert"
+          attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+        />
+        <Marker position={latlng}>
+          <Popup>{currentAddress.street}</Popup>
+        </Marker>
+      </MapContainer>
     </div>
   );
 };
 
 export const Component = ClientPage;
+
 export const loader = ({ params }: { params: Params }) =>
   fetchBanks().then((banks) =>
     banks.find((bank) => String(bank.id) === params.clientId)

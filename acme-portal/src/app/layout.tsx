@@ -2,12 +2,12 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import { Footer } from "./components/Footer/Footer";
-import "./globals.css";
 import { AppConfig } from "~/features/AppConfig";
-import { Configuration, UfrontEnvName } from "~/global";
+import { Configuration } from "~/global";
 import { toUfrontUrl } from "~/features/ufronts/ufrontUrls";
+import "./globals.css";
 
-const inter = Inter({ subsets: ["latin"] });
+const inter = Inter({ subsets: ["latin"], fallback: ["sans-serif"] });
 
 export const metadata: Metadata = {
   title: "Acme",
@@ -53,7 +53,7 @@ export default async function RootLayout(props: Props) {
           }}
         ></script>
         <script src="https://cdn.jsdelivr.net/npm/es-module-shims@1.9.0/dist/es-module-shims.min.js" />
-        {/* <script
+        <script
           src="https://esm.sh/stable/react@18.2.0/es2022/react.mjs"
           type="module"
         />
@@ -64,7 +64,18 @@ export default async function RootLayout(props: Props) {
         <script
           src="https://esm.sh/stable/react@18.2.0/es2022/jsx-runtime.mjs"
           type="module"
-        /> */}
+        />
+        <link
+          rel="stylesheet"
+          href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+          integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+          crossOrigin=""
+        />
+        <script
+          src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+          integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+          crossOrigin=""
+        />
       </head>
       <body className={inter.className}>
         {children}

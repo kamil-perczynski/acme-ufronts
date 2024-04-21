@@ -12,14 +12,17 @@
   "dependencies": {
     "@acme/acme-ds": "file:../acme-ds/acme-acme-ds-0.0.0.tgz",
     "@tanstack/react-table": "^8.16.0",
+    "leaflet": "^1.9.4",
     "react": "^18.2.0",
     "react-data-grid": "^7.0.0-beta.43",
     "react-dom": "^18.2.0",
+    "react-leaflet": "^4.2.1",
     "react-router-dom": "^6.22.3",
     "recharts": "^2.12.5",
     "single-spa-react": "^6.0.1"
   },
   "devDependencies": {
+    "@types/leaflet": "^1.9.11",
     "@types/node": "^20.12.7",
     "@types/react": "^18.2.66",
     "@types/react-dom": "^18.2.22",
@@ -30,6 +33,7 @@
     "eslint": "^8.57.0",
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-refresh": "^0.4.6",
+    "lucide-react": "^0.365.0",
     "postcss": "^8.4.38",
     "tailwindcss": "^3.4.3",
     "typescript": "^5.2.2",

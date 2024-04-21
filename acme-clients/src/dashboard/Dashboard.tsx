@@ -33,8 +33,18 @@ export const Dashboard: React.FC = () => {
           <Tooltip />
           <Legend align="left" />
           <ReferenceLine y={0} stroke="#000" />
-          <Bar dataKey="income" radius={4} fill="hsl(var(--accent))" />
-          <Bar dataKey="costs" radius={4} fill="var(--secondary)" />
+          <Bar
+            barSize={32}
+            dataKey="income"
+            radius={4}
+            fill="hsl(var(--accent))"
+          />
+          <Bar
+            barSize={32}
+            dataKey="costs"
+            radius={4}
+            fill="hsl(var(--secondary-foreground))"
+          />
         </BarChart>
       </ResponsiveContainer>
     </div>

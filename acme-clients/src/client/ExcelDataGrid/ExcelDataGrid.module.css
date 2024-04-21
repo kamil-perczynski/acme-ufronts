@@ -8,11 +8,16 @@
 .datagrid * {
   background: hsl(var(--background));
   color: inherit;
+  --rdg-selection-color: hsl(var(--accent));
 }
 
 .datagrid [role="gridcell"],
 .datagrid [role="columnheader"] {
   border-block-end: 1px solid hsl(var(--border));
+}
+
+.datagrid [role="columnheader"] div:last-child {
+  display: none;
 }
 
 .datagrid [role="columnheader"],
@@ -22,9 +27,13 @@
 
 .datagrid [data-highlighted="true"],
 .datagrid [data-highlighted="true"] * {
-  @apply !c-bg-blue-100 !c-border-blue-300;
+  @apply !c-bg-accent/10 !c-border-accent;
 }
 
 .datagrid *[role="columnheader"] :global(.rdg-sort-arrow) {
   @apply c-translate-x-[-2px] c-translate-y-[14px];
+}
+
+.datagrid [role="row"]:hover * {
+  @apply c-bg-muted;
 }

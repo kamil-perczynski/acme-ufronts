@@ -85,11 +85,7 @@ export const columns: ColumnDef<BankListItem>[] = [
     },
     cell: ({ row }) => (
       <div className="lowercase">
-        <Link
-          preventScrollReset={false}
-          className="hover:c-underline"
-          to={`/clients/${row.original.id}`}
-        >
+        <Link className="hover:c-underline" to={`/clients/${row.original.id}`}>
           {row.getValue("name")}
         </Link>
       </div>

@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import type { ReactNode } from "react";
 import Link from "next/link";
 import {
@@ -148,8 +149,12 @@ export const Dashboard: React.FC<DashboardProps> = (props) => {
                 </Link>
 
                 <div className="py-4 mx-[-0.65rem] flex flex-row items-center">
-                  <Avatar  className="bg-emerald-200 h-12 w-12">
-                    <img width={64} src={loggedUser.avatar} alt={loggedUser.displayName} />
+                  <Avatar className="bg-emerald-200 h-12 w-12">
+                    <img
+                      width={64}
+                      src={loggedUser.avatar}
+                      alt={loggedUser.displayName}
+                    />
                     <AvatarFallback>
                       {loggedUser.displayName
                         .substring(0, 2)
