@@ -10,15 +10,21 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@acme/acme-ds": "file:../acme-ds/acme-acme-ds-0.0.0.tgz",
+    "clsx": "^2.1.1",
+    "lucide-react": "^0.372.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-hook-form": "^7.51.3",
+    "react-input-mask": "^2.0.4",
     "react-router-dom": "^6.22.3",
-    "single-spa-react": "^6.0.1",
-    "@acme/acme-ds": "file://../acme-ds/acme-acme-ds-0.0.0.tgz"
+    "single-spa-react": "^6.0.1"
   },
   "devDependencies": {
+    "@types/node": "^20.12.7",
     "@types/react": "^18.2.66",
     "@types/react-dom": "^18.2.22",
+    "@types/react-input-mask": "^3.0.5",
     "@typescript-eslint/eslint-plugin": "^7.2.0",
     "@typescript-eslint/parser": "^7.2.0",
     "@vitejs/plugin-react": "^4.2.1",
@@ -27,6 +33,7 @@
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-refresh": "^0.4.6",
     "postcss": "^8.4.38",
+    "postcss-prefix-selector": "^1.16.1",
     "tailwindcss": "^3.4.3",
     "typescript": "^5.2.2",
     "vite": "^5.2.0",

@@ -1,4 +1,5 @@
 import React from "react";
+import { Container } from "~/app/components/Container";
 import { Dashboard } from "~/app/components/Dashboard";
 import { Microfront } from "~/app/components/Microfront";
 import { fetchLoggedUser } from "~/features/http";
@@ -7,11 +8,15 @@ export default async function ProductCatalogPage() {
   const loggedUser = await fetchLoggedUser();
 
   return (
-    <main className="w-full lg:min-h-[600px] xl:min-h-[800px]">
+    <main className="w-full min-h-screen overflow-x-hidden">
       <Dashboard loggedUser={loggedUser}>
-        <div id="@acme/acme-product-catalog" className="container mx-auto p-4">
+        <Container
+          id="@acme/acme-product-catalog"
+          style={{ opacity: 0 }}
+          className="@acme/acme-product-catalog duration-200"
+        >
           <Microfront microfrontId="@acme/acme-product-catalog" />
-        </div>
+        </Container>
       </Dashboard>
     </main>
   );

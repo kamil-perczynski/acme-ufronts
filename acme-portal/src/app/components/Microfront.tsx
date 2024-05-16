@@ -16,7 +16,6 @@ export const Microfront: React.FC<Props> = (props) => {
   const router = useRouter();
 
   const subscription = useRef<null | ((nextPath: string) => void)>(null);
-
   const subscribe = useCallback(
     (onRouteChanged: (nextPath: string) => void) => {
       subscription.current = onRouteChanged;
@@ -34,31 +33,78 @@ export const Microfront: React.FC<Props> = (props) => {
     }
   }, [pathname]);
 
-  const [isMounted, setMounted] = useState(false);
+  const [error, setError] = useState<Error | null>(null);
 
   useEffect(() => {
     let parcelConfig: Parcel | null = null;
     let domElement: HTMLElement | null = null;
 
-    importShim(microfrontId).then((parcelModule: ParcelConfig) => {
-      domElement = document.getElementById(rootId ?? microfrontId)!;
+    domElement = document.getElementById(rootId ?? microfrontId)!;
+    Promise.any([
+      importShim(microfrontId)
+        .then((parcelModule: ParcelConfig) => {
+          parcelConfig = mountRootParcel(parcelModule, {
+            domElement,
+            subscribe,
+          });
 
-      parcelConfig = mountRootParcel(parcelModule, {
-        domElement,
-        subscribe,
-      });
-
-      setMounted(true);
-    });
+          return parcelConfig.mountPromise;
+        })
+        .catch((err) => {
+          console.error(err);
+          setError(err);
+        })
+        .finally(() => {
+          timeoutMs(350).then(() => {
+            if (domElement) {
+              domElement.style.opacity = "1";
+            }
+          });
+        }),
+      timeoutMs(600).then(() => {
+        if (domElement) {
+          domElement.style.opacity = "1";
+        }
+      }),
+    ]);
 
     return () => {
-      parcelConfig?.unmount().then(() => domElement?.remove());
+      parcelConfig?.unmount().then(
+        () => domElement?.remove(),
+        (err) => console.log(err)
+      );
     };
-  }, [router.prefetch, subscribe, microfrontId, rootId]);
+  }, [subscribe, microfrontId, rootId]);
 
-  if (!isMounted) {
-    return <MicrofrontSkeleton />;
+  if (error) {
+    return (
+      <div className="flex flex-col gap-6 mt-8">
+        <h1 className="text-2xl font-semibold tracking-tight">
+          Oops, something went wrong
+        </h1>
+
+        <p>Please copy information below and send it to the Administrator.</p>
+
+        <code className="relative rounded bg-muted p-4 font-mono text-sm">
+          <b>URL:</b> <br />
+          {window.location.toString()}
+          <br />
+          <br />
+          <b>Timestamp:</b> <br />
+          {new Date().toLocaleString()}
+          <br />
+          <br />
+          <b>Message:</b> <br /> {error?.message} <br />
+          <br />
+          <b>Stack:</b> <br /> {error?.stack}
+        </code>
+      </div>
+    );
   }
 
-  return null;
+  return <MicrofrontSkeleton />;
 };
+
+function timeoutMs(ms: number): Promise<unknown> {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}

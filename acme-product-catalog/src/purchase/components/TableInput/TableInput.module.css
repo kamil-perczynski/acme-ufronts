@@ -1,0 +1,28 @@
+.tableInput {
+  appearance: none;
+  outline: none;
+  border-radius: 0;
+  @apply pc-border-0 pc-border-b-[1px] pc-p-[.125rem] pc-border-transparent focus-visible:pc-border-primary [&:not(:disabled)]:hover:pc-border-primary pc-appearance-none pc-w-full pc-bg-transparent;
+}
+
+select.tableInput {
+  background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIj4KICA8cG9seWdvbiBwb2ludHM9IjAsMCAxMDAsMCA1MCwxMDAiIGZpbGw9IiMwMDAwMDAiLz4KPC9zdmc+);
+  background-size: 10px 9px;
+  background-repeat: no-repeat;
+  background-position-y: 50%;
+  background-position-x: right;
+  @apply pc-pr-1;
+}
+
+select[dir="rtl"].tableInput,
+select[dir="rtl"].tableInput {
+  background-position-x: left;
+}
+
+.tableInput[aria-invalid="true"]:not(:disabled) {
+  @apply pc-text-destructive pc-border-destructive pc-placeholder-destructive/80;
+}
+
+.tableInput:disabled {
+  @apply disabled:pc-cursor-not-allowed disabled:pc-opacity-50;
+}

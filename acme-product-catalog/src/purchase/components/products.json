@@ -1,0 +1,88 @@
+{
+  "products": [
+    {
+      "name": "VoltTech Digital Multimeter",
+      "manufacturer": "ElectroDynamics Corporation",
+      "manufacturer_code": "VDMM-1001",
+      "batchId": "VDMM2024-001"
+    },
+    {
+      "name": "TechScope Oscilloscope",
+      "manufacturer": "Innovate Instruments, Inc.",
+      "manufacturer_code": "TSOS-2001",
+      "batchId": "TSOS2024-002"
+    },
+    {
+      "name": "SolderPro Soldering Station",
+      "manufacturer": "CircuitCraft Tools",
+      "manufacturer_code": "SOLS-3001",
+      "batchId": "SOLS2024-003"
+    },
+    {
+      "name": "PowerPulse Precision Power Supply",
+      "manufacturer": "ElectroTech Solutions",
+      "manufacturer_code": "PPPS-4001",
+      "batchId": "PPPS2024-004"
+    },
+    {
+      "name": "SmartCal Digital Caliper",
+      "manufacturer": "Precision Instruments Co.",
+      "manufacturer_code": "SCDC-5001",
+      "batchId": "SCDC2024-005"
+    },
+    {
+      "name": "ProDriver Precision Screwdriver Set",
+      "manufacturer": "MasterCraft Tools",
+      "manufacturer_code": "PDPSS-6001",
+      "batchId": "PDPSS2024-006"
+    },
+    {
+      "name": "LogicMaster Logic Analyzer",
+      "manufacturer": "CircuitSavvy Technologies",
+      "manufacturer_code": "LMLA-7001",
+      "batchId": "LMLA2024-007"
+    },
+    {
+      "name": "WireWiz Pro Wire Strippers",
+      "manufacturer": "ElectroCraft Industries",
+      "manufacturer_code": "WWPS-8001",
+      "batchId": "WWPS2024-008"
+    },
+    {
+      "name": "HeatMaster Precision Heat Gun",
+      "manufacturer": "ThermoTech Tools",
+      "manufacturer_code": "HMHG-9001",
+      "batchId": "HMHG2024-009"
+    },
+    {
+      "name": "UltraProbe Ultrasonic Leak Detector",
+      "manufacturer": "SonicTech Innovations",
+      "manufacturer_code": "UPLD-1002",
+      "batchId": "UPLD2024-010"
+    },
+    {
+      "name": "MegaMach Rotary Tool Kit",
+      "manufacturer": "Machinix Corporation",
+      "manufacturer_code": "MMRTK-1002",
+      "batchId": "MMRTK2024-011"
+    },
+    {
+      "name": "ElectraFix Circuit Board Repair Kit",
+      "manufacturer": "CircuitSolve Supplies",
+      "manufacturer_code": "EFX-1003",
+      "batchId": "EFX2024-012"
+    },
+    {
+      "name": "FlexGrip Precision Pliers Set",
+      "manufacturer": "GripMaster Tools",
+      "manufacturer_code": "FGPPS-1003",
+      "batchId": "FGPPS2024-013"
+    },
+    {
+      "name": "SignalMaster Function Generator",
+      "manufacturer": "ElectroWave Tech",
+      "manufacturer_code": "SMFG-1003",
+      "batchId": "SMFG2024-014"
+    }
+  ]
+}

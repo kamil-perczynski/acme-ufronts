@@ -1,24 +1,27 @@
 import * as React from "react";
+import { Slot } from "@radix-ui/react-slot";
 
 import { cn } from "~/lib/utils";
+import styles from "./input.module.css";
 
 export interface InputProps
-  extends React.InputHTMLAttributes<HTMLInputElement> {}
+  extends React.InputHTMLAttributes<HTMLInputElement> {
+  asChild?: boolean;
+}
 
 const Input = React.forwardRef<HTMLInputElement, InputProps>(
-  ({ className, type, ...props }, ref) => {
+  ({ className, type, asChild = false, ...props }, ref) => {
+    const Comp = asChild ? Slot : "input";
+
     return (
-      <input
+      <Comp
         type={type}
-        className={cn(
-          "ds-flex ds-h-9 ds-w-full ds-rounded-md ds-border ds-border-input ds-bg-transparent ds-px-3 ds-py-1 ds-text-sm ds-shadow-sm ds-transition-colors file:ds-border-0 file:ds-bg-transparent file:ds-text-sm file:ds-font-medium placeholder:ds-text-muted-foreground focus-visible:ds-outline-none focus-visible:ds-ring-1 focus-visible:ds-ring-ring disabled:ds-cursor-not-allowed disabled:ds-opacity-50",
-          className,
-        )}
+        className={cn(styles.input, className)}
         ref={ref}
         {...props}
       />
     );
-  },
+  }
 );
 Input.displayName = "Input";
 

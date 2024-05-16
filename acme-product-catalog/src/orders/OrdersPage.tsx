@@ -1,5 +1,8 @@
 import React from "react";
 import { OrdersTable } from "./OrdersTable";
+import { Button } from "@acme/acme-ds";
+import { PackagePlus } from "lucide-react";
+import { Link } from "react-router-dom";
 
 interface Props {}
 
@@ -18,8 +21,19 @@ export const OrdersPage: React.FC<Props> = () => {
         velit esse cillum dolore eu fugiat nulla pariatur.
       </p>
 
-      <div className="pc-rounded-md pc-border pc-mb-6">
-        <OrdersTable title="Recent orders" />
+      <div className="pc-flex pc-flex-col pc-gap-2">
+        <div className="pc-flex pc-justify-end">
+          <Button asChild variant="outline">
+            <Link to="/product-catalog/orders/purchase">
+              <PackagePlus width="1rem" />
+              &nbsp; Create purchase
+            </Link>
+          </Button>
+        </div>
+
+        <div className="pc-rounded-md pc-border pc-mb-6">
+          <OrdersTable title="Recent orders" />
+        </div>
       </div>
 
       <h3 className="pc-text-2xl pc-font-medium pc-border-b-[1px] pc-border-border pc-pb-2">
@@ -32,3 +46,5 @@ export const OrdersPage: React.FC<Props> = () => {
     </div>
   );
 };
+
+export const Component = OrdersPage;

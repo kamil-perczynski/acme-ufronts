@@ -6,6 +6,8 @@ import singleSpaReact from "single-spa-react";
 import { cssLifecycleFactory } from "vite-plugin-single-spa/ex";
 import { Root } from "./Root";
 
+import "./index.css";
+
 const lc = singleSpaReact({
   React,
   ReactDOMClient,

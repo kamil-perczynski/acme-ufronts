@@ -1,2 +1,4 @@
+@import "react-data-grid/lib/styles.css";
+
 @tailwind components;
 @tailwind utilities;

@@ -1,30 +1,21 @@
-import { useEffect } from "react";
-import { Route, Routes, useNavigate } from "react-router-dom";
-import { ProductsPage } from "./products/ProductsPage";
-import { OrdersPage } from "./orders/OrdersPage";
+import { Route, createRoutesFromElements } from "react-router-dom";
 
-type AppProps = {
-  subscribe(callback: (next: string) => void): () => void;
-};
+export const routes = createRoutesFromElements(
+  <>
+    <Route lazy={() => import("./dashboard/Dashboard")} path="/dashboard" />
+    <Route
+      lazy={() => import("./products/ProductsPage")}
+      path="/product-catalog/products"
+    />
 
-const App: React.FC<AppProps> = (props) => {
-  const { subscribe } = props;
+    <Route
+      lazy={() => import("./purchase/CreatePurchasePage")}
+      path="/product-catalog/orders/purchase"
+    />
 
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    return subscribe((nextPath: string) => {
-      navigate({ pathname: nextPath }, { replace: true });
-    });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  return (
-    <Routes>
-      <Route path="/product-catalog/products" Component={ProductsPage} />
-      <Route path="/product-catalog/orders" Component={OrdersPage} />
-    </Routes>
-  );
-};
-
-export default App;
+    <Route
+      lazy={() => import("./orders/OrdersPage")}
+      path="/product-catalog/orders"
+    />
+  </>
+);

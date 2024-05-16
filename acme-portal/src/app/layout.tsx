@@ -2,9 +2,13 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import { Footer } from "./components/Footer/Footer";
+import { AppConfig } from "~/features/AppConfig";
+import { Configuration } from "~/global";
+import { toUfrontUrl } from "~/features/ufronts/ufrontUrls";
 import "./globals.css";
+import clsx from "clsx";
 
-const inter = Inter({ subsets: ["latin"] });
+const inter = Inter({ subsets: ["latin"], fallback: ["sans-serif"] });
 
 export const metadata: Metadata = {
   title: "Acme",
@@ -15,21 +19,34 @@ type Props = Readonly<{
   children: React.ReactNode;
 }>;
 
-export default function RootLayout(props: Props) {
+const appConfig = AppConfig.load<Configuration>();
+
+export default async function RootLayout(props: Props) {
   const { children } = props;
+
+  const config = await appConfig.get();
+
+  const ufronts: Record<string, string> = {};
+  Object.entries(config.ufronts).forEach(([ufront]) => {
+    ufronts[ufront] = new URL(toUfrontUrl(ufront, config)).pathname;
+  });
 
   return (
     <html lang="en">
       <head>
-        <script src="https://cdn.jsdelivr.net/npm/es-module-shims@1.9.0/dist/es-module-shims.min.js" />
+        <meta name="theme-color" content="#000000" />
         <script
           type="importmap"
           dangerouslySetInnerHTML={{
             __html: JSON.stringify(
               {
                 imports: {
-                  "@acme/acme-product-catalog": toSpaUrl("acme-product-catalog"),
-                  "@acme/acme-clients": toSpaUrl("acme-clients"),
+                  react: "https://esm.sh/stable/react@18.2.0/es2022/react.mjs",
+                  "react-dom":
+                    "https://esm.sh/v135/react-dom@18.2.0/es2022/react-dom.bundle.mjs",
+                  "react/jsx-runtime":
+                    "https://esm.sh/stable/react@18.2.0/es2022/jsx-runtime.mjs",
+                  ...ufronts,
                 },
               },
               undefined,
@@ -37,18 +54,35 @@ export default function RootLayout(props: Props) {
             ),
           }}
         ></script>
+        <script src="https://cdn.jsdelivr.net/npm/es-module-shims@1.9.0/dist/es-module-shims.min.js" />
+        <script
+          src="https://esm.sh/stable/react@18.2.0/es2022/react.mjs"
+          type="module"
+        />
+        <script
+          src="https://esm.sh/v135/react-dom@18.2.0/es2022/react-dom.bundle.mjs"
+          type="module"
+        />
+        <script
+          src="https://esm.sh/stable/react@18.2.0/es2022/jsx-runtime.mjs"
+          type="module"
+        />
+        <link
+          rel="stylesheet"
+          href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+          integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+          crossOrigin=""
+        />
+        <script
+          src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+          integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+          crossOrigin=""
+        />
       </head>
-      <body className={inter.className}>
+      <body className={clsx(inter.className, "w-screen overflow-x-hidden")}>
         {children}
         <Footer />
       </body>
     </html>
   );
-}
-
-function toSpaUrl(ufront: string) {
-  const spaPath =
-    process.env.NODE_ENV == "development" ? "src/spa.tsx" : "spa.js";
-
-  return `/ufronts/${ufront}/${spaPath}`;
 }

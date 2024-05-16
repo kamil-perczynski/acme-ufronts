@@ -23,6 +23,7 @@ export default defineConfig({
         "react/jsx-runtime",
         "react-dom",
         "tailwindcss",
+        "react-hook-form",
         new RegExp(/@radix-ui\/.*/g),
       ],
       output: {

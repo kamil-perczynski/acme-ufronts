@@ -4,7 +4,7 @@ import vitePluginSingleSpa from "vite-plugin-single-spa";
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  base: "/ufronts/acme-product-catalog",
+  base: "/ufronts/@acme/acme-product-catalog",
   plugins: [
     react(),
     vitePluginSingleSpa({
@@ -15,7 +15,10 @@ export default defineConfig({
     }),
   ],
   build: {
-    sourcemap: true,
+    sourcemap: process.env.GENERATE_SOURCEMAP === "true",
+    rollupOptions: {
+      external: ["react", "react-dom", "react/jsx-runtime"],
+    },
   },
   server: {
     hmr: false,

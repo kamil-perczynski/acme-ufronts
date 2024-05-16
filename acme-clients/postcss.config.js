@@ -1,6 +1,7 @@
+import tailwindcss from "tailwindcss";
+import autoprefixer from "autoprefixer";
+import scopify from "postcss-scopify";
+
 export default {
-  plugins: {
-    tailwindcss: {},
-    autoprefixer: {},
-  },
-}
+  plugins: [scopify(".\\@acme\\/acme-clients"), tailwindcss, autoprefixer],
+};

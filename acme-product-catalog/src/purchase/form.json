@@ -1,0 +1,35 @@
+{
+  "client": {
+    "fullName": "Kamil Perczyński",
+    "email": "kamil.perczynski@google.com",
+    "phone": "+4857314515321"
+  },
+  "deliveryAddress": {
+    "addressLine": "Roztocka 5",
+    "country": "Poland",
+    "province": "Masovia",
+    "city": "Warsaw",
+    "postalCode": "89515"
+  },
+  "invoices": [
+    {
+      "name": "SolderPro Soldering Station, SOLS-3001",
+      "discount": false,
+      "price": "170",
+      "qty": "2",
+      "vat": "23"
+    },
+    {
+      "name": "ProDriver Precision Screwdriver Set, PDPSS-6001",
+      "discount": true,
+      "price": "20",
+      "qty": "5",
+      "vat": "23"
+    }
+  ],
+  "payment": {
+    "bankAccount": "PL1420041010050500013M02606",
+    "splitPayment": true,
+    "notes": ""
+  }
+}

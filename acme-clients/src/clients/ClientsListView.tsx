@@ -1,5 +1,3 @@
-"use client";
-
 import React, { useState } from "react";
 import {
   CaretSortIcon,
@@ -36,23 +34,24 @@ import {
   TableBody,
   TableCell,
   Checkbox,
-  Badge,
 } from "@acme/acme-ds";
 import { BankListItem } from "../features/companies";
+import { Link } from "react-router-dom";
 
 const columnNames: Record<string, string> = {
-  status: "Status",
-  bank_name: "Bank name",
-  swift_bic: "SWIFT",
-  routing_number: "Routing No",
-  account_number: "Account No",
+  name: "Company name",
+  email: "E-mail",
+  phone: "Phone",
+  vat: "VAT",
 };
 
 export const columns: ColumnDef<BankListItem>[] = [
   {
     id: "select",
+    size: 35,
     header: ({ table }) => (
       <Checkbox
+        className="c-block"
         checked={
           table.getIsAllPageRowsSelected() ||
           (table.getIsSomePageRowsSelected() && "indeterminate")
@@ -63,6 +62,7 @@ export const columns: ColumnDef<BankListItem>[] = [
     ),
     cell: ({ row }) => (
       <Checkbox
+        className="c-block"
         checked={row.getIsSelected()}
         onCheckedChange={(value) => row.toggleSelected(!!value)}
         aria-label="Select row"
@@ -72,40 +72,38 @@ export const columns: ColumnDef<BankListItem>[] = [
     enableHiding: false,
   },
   {
-    accessorKey: "status",
-    header: "Status",
-    cell: () => <Badge>Active</Badge>,
-  },
-  {
-    accessorKey: "bank_name",
+    accessorKey: "name",
+    size: 420,
     header: ({ column }) => {
       return (
         <Button
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
-          Bank Name
+          Company Name
           <CaretSortIcon className="c-ml-2 c-h-4 c-w-4" />
         </Button>
       );
     },
     cell: ({ row }) => (
-      <div className="lowercase">{row.getValue("bank_name")}</div>
+      <div className="lowercase">
+        <Link className="hover:c-underline" to={`/clients/${row.original.id}`}>
+          {row.getValue("name")}
+        </Link>
+      </div>
     ),
   },
   {
-    accessorKey: "swift_bic",
-    header: () => <div className="c-text-right">Swift</div>,
+    size: 210,
+    accessorKey: "email",
+    header: () => <div>E-mail</div>,
     cell: ({ row }) => {
-      return (
-        <div className="c-text-right c-font-medium">
-          {row.getValue("swift_bic")}
-        </div>
-      );
+      return <div className="c-font-medium">{row.getValue("email")}</div>;
     },
   },
   {
-    accessorKey: "routing_number",
+    size: 150,
+    accessorKey: "phone",
     header: ({ column }) => {
       return (
         <div className="c-flex c-justify-end">
@@ -113,7 +111,7 @@ export const columns: ColumnDef<BankListItem>[] = [
             variant="ghost"
             onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
           >
-            Routing No
+            Phone
             <CaretSortIcon className="c-ml-2 c-h-4 c-w-4" />
           </Button>
         </div>
@@ -122,23 +120,23 @@ export const columns: ColumnDef<BankListItem>[] = [
     cell: ({ row }) => {
       return (
         <div className="c-text-right c-font-medium">
-          {row.getValue("routing_number")}
+          {row.getValue("phone")}
         </div>
       );
     },
   },
   {
-    accessorKey: "account_number",
-    header: () => <div className="c-text-right">Account No</div>,
+    size: 120,
+    accessorKey: "vat",
+    header: () => <div className="c-text-right">VAT</div>,
     cell: ({ row }) => {
       return (
-        <div className="c-text-right c-font-medium">
-          {row.getValue("account_number")}
-        </div>
+        <div className="c-text-right c-font-medium">{row.getValue("vat")}</div>
       );
     },
   },
   {
+    size: 40,
     id: "actions",
     enableHiding: false,
     cell: ({ row }) => {
@@ -153,9 +151,9 @@ export const columns: ColumnDef<BankListItem>[] = [
           <DropdownMenuContent align="end">
             <DropdownMenuLabel>Actions</DropdownMenuLabel>
             <DropdownMenuItem
-              onClick={() => navigator.clipboard.writeText(bank.swift_bic)}
+              onClick={() => navigator.clipboard.writeText(bank.vat)}
             >
-              Copy SWIFT
+              Copy VAT
             </DropdownMenuItem>
             <DropdownMenuSeparator />
             <DropdownMenuItem>View customer</DropdownMenuItem>
@@ -181,6 +179,11 @@ export const ClientsListView: React.FC<{ banks: BankListItem[] }> = (props) => {
   const table = useReactTable({
     data: props.banks,
     columns,
+    defaultColumn: {
+      minSize: 10,
+      size: 100,
+      maxSize: 600,
+    },
     onSortingChange: setSorting,
     onColumnFiltersChange: setColumnFilters,
     getCoreRowModel: getCoreRowModel(),
@@ -240,13 +243,16 @@ export const ClientsListView: React.FC<{ banks: BankListItem[] }> = (props) => {
         </DropdownMenu>
       </div>
       <div className="c-rounded-md c-border">
-        <Table>
+        <Table className="c-table-fixed">
           <TableHeader className="bg-background">
             {table.getHeaderGroups().map((headerGroup) => (
               <TableRow key={headerGroup.id}>
                 {headerGroup.headers.map((header) => {
                   return (
-                    <TableHead key={header.id}>
+                    <TableHead
+                      style={{ width: header.getSize() }}
+                      key={header.id}
+                    >
                       {header.isPlaceholder
                         ? null
                         : flexRender(

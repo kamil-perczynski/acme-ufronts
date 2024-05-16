@@ -1,18 +1,7 @@
 import React from "react";
-import {
-  Badge,
-  Table,
-  TableBody,
-  TableCaption,
-  TableCell,
-  TableFooter,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@acme/acme-ds";
 import { invoices } from "./invoices";
 
-import styles from "./ProductsPage.module.css";
+import { InvoicesTable } from "../components/InvoicesTable/InvoicesTable";
 import { Link } from "react-router-dom";
 
 interface Props {}
@@ -24,48 +13,18 @@ export const ProductsPage: React.FC<Props> = () => {
         Products
       </h1>
 
-      <p>Table goes here</p>
+      <p>
+        Table goes{" "}
+        <Link className="hover:pc-underline" to="/product-catalog/orders">
+          here
+        </Link>
+      </p>
 
       <div className="pc-rounded-md pc-mt-4 pc-border">
-        <Table className={styles.invoices}>
-          <TableCaption>A list of your recent invoices.</TableCaption>
-          <TableHeader>
-            <TableRow>
-              <TableHead>Invoice</TableHead>
-              <TableHead>Status</TableHead>
-              <TableHead>Method</TableHead>
-              <TableHead className="pc-text-right">Amount</TableHead>
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            {invoices.map((invoice) => (
-              <TableRow key={invoice.invoice}>
-                <TableCell className="pc-font-medium">
-                  <Link
-                    to={`/product-catalog/invoices/${invoice.invoice}`}
-                    className="hover:underline"
-                  >
-                    {invoice.invoice}
-                  </Link>
-                </TableCell>
-                <TableCell className="pc-flex pc-content-end">
-                  <Badge>{invoice.paymentStatus}</Badge>
-                </TableCell>
-                <TableCell>{invoice.paymentMethod}</TableCell>
-                <TableCell className="pc-text-right">
-                  {invoice.totalAmount}
-                </TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-          <TableFooter>
-            <TableRow>
-              <TableCell colSpan={3}>Total</TableCell>
-              <TableCell className="pc-text-right">$2,500.00</TableCell>
-            </TableRow>
-          </TableFooter>
-        </Table>
+        <InvoicesTable title="Recent invoices" invoices={invoices} />
       </div>
     </div>
   );
 };
+
+export const Component = ProductsPage;

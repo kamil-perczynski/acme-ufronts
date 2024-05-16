@@ -1,0 +1,12 @@
+.formItem {
+  @apply pc-grid pc-grid-flow-col pc-grid-cols-subgrid pc-space-y-0 pc-row-span-4 pc-grid-rows-subgrid pc-gap-y-1;
+}
+
+.formItem > * {
+  @apply pc-col-span-full;
+}
+
+.formItem label[data-required="true"]::after {
+  content: " *";
+  @apply pc-text-red-500;
+}

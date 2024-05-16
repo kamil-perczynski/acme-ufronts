@@ -1,0 +1,43 @@
+.datagrid [role="gridcell"]:not(:last-child),
+.datagrid [role="columnheader"]:not(:last-child) {
+  border-block-end: 1px solid hsl(var(--border));
+  border-inline-end: 1px solid hsl(var(--border));
+}
+
+.datagrid,
+.datagrid * {
+  background: hsl(var(--background));
+  scrollbar-width: none;
+  color: inherit;
+  --rdg-selection-color: hsl(var(--accent));
+}
+
+.datagrid [role="gridcell"],
+.datagrid [role="columnheader"] {
+  border-block-end: 1px solid hsl(var(--border));
+}
+
+.datagrid [role="columnheader"] div:last-child {
+  display: none;
+}
+
+.datagrid [role="columnheader"],
+.datagrid [role="columnheader"] * {
+  @apply ds-bg-muted ds-font-medium ds-text-muted-foreground;
+}
+
+.datagrid *[role="columnheader"] :global(.rdg-sort-arrow) {
+  @apply ds-translate-x-[-2px] ds-translate-y-[14px];
+}
+
+.datagrid [role="row"]:hover * {
+  @apply ds-bg-muted;
+}
+
+.datagrid [data-highlighted="true"], .datagrid [data-highlighted="true"] * {
+  @apply !ds-bg-green-50;
+}
+
+.datagrid [data-highlighted="true"]:not([aria-selected="true"]) {
+  @apply ds-outline-1 ds-outline-dashed ds-outline-accent;
+}

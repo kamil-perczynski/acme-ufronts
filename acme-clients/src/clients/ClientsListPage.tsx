@@ -1,16 +1,13 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { ClientsListView } from "./ClientsListView";
 import { BankListItem, fetchBanks } from "../features/companies";
 import { Skeleton } from "@acme/acme-ds";
+import { useLoaderData } from "react-router-dom";
 
 interface Props {}
 
 export const ClientsListPage: React.FC<Props> = () => {
-  const [banks, setBanks] = useState<BankListItem[]>([]);
-
-  useEffect(() => {
-    fetchBanks().then((banks) => setBanks(banks));
-  }, []);
+  const banks = useLoaderData() as BankListItem[];
 
   return (
     <div className="c-flex c-flex-col c-gap-4 c-mt-4 c-lg:mt-12">
@@ -23,3 +20,6 @@ export const ClientsListPage: React.FC<Props> = () => {
     </div>
   );
 };
+
+export const Component = ClientsListPage;
+export const loader = () => fetchBanks();

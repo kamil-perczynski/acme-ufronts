@@ -10,14 +10,17 @@ type Props = {
   text: string;
   badge?: string;
   href: string;
+  activeAt?: string;
 } & JSX.IntrinsicElements["a"];
 
 export const DashboardItem: React.FC<Props> = (props) => {
-  const { icon, text, badge, href, ...rest } = props;
+  const { icon, text, badge, href, activeAt, ...rest } = props;
 
   const pathname = usePathname();
 
-  const isCurrentRoute = pathname == href;
+  const isCurrentRoute = activeAt
+    ? pathname.startsWith(activeAt)
+    : href === pathname;
 
   const classes = cn(
     isCurrentRoute && "bg-muted text-black",

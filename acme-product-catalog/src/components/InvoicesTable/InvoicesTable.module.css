@@ -1,0 +1,8 @@
+.orders {
+    @apply pc-w-full pc-caption-bottom pc-text-sm pc-table-fixed;
+  }
+  
+  .orders caption {
+    @apply pc-pb-2;
+  }
+  
